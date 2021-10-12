@@ -1,14 +1,11 @@
 package modifiers
 
+// https://kotlinlang.org/docs/keyword-reference.html#modifier-keywords
 // The lateinit keyword is used for late initialization of variables.
 
 lateinit var lateinitVar: String
 
 val lateLambda = {  println(lateinitVar) }
-
-//class A {
-//    public lateinit var lateinitVar: String
-//}
 
 fun main() {
     // Reference uninitialized variable. Get exception.
@@ -20,14 +17,14 @@ fun main() {
     }
 
     // Check if variable was initialized.
-//    if (A().lateinitVar.isInitialized)) {
-//        println("lateinit var was initialized")
-//    }
-//    else {
-//        println("lateinit var was not initialized")
-//    }
+    if(::lateinitVar.isInitialized) {
+        println("lateinit var was initialized")
+    }
+    else {
+        println("lateinit var was not initialized")
+    }
 
-    // Variable is initialized before referenceing it.
+    // Variable is initialized before referencing it.
     lateinitVar = "Hello, World!"
     lateLambda()
 }
