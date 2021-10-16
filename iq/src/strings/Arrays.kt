@@ -45,6 +45,6 @@ fun main() {
     var numbers = mutableListOf(0,2,4,0,6,0)
 
     println("Array before: " + numbers.toString())
-    println("Array after: " + Arrays().moveZerosToEnd(numbers).toString())
-    println("Array after: " + Arrays().moveZerosToBegining(numbers).toString())
+    println("Array after moveZerosToEnd: " + Arrays().moveZerosToEnd(numbers).toString())
+    println("Array after moveZerosToBegining: " + Arrays().moveZerosToBegining(numbers).toString())
 }
