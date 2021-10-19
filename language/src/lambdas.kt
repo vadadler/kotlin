@@ -22,4 +22,17 @@ fun main() {
 
     println(upperCase1("hahaha"))
     println(upperCase2("hahaha"))
+
+    // Using lambda expressions to filter and map collections.
+    val fruits = listOf("Apple", "Pear", "Apricot", "Banana", "Cherry")
+
+    functionChain(fruits)
+}
+
+fun functionChain(listofFruits: List<String>) {
+    listofFruits
+        .filter { it.startsWith("A") }
+        .sorted()
+        .map { it.uppercase() }
+        .forEach {println(it)}
 }

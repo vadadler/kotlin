@@ -10,12 +10,12 @@ class When {
         }
     }
 
-    fun doWhenExpression(param: Any): String {
+    fun doWhenExpression(param: Any): Any {
         val ret = when (param) {
-            1 -> "one"
+            1 -> 1
             "Hello" -> "hello"
-            is Long -> "Long"
-            else -> "Unknonw"
+            is Long -> 12L
+            else -> 72
         }
 
         return ret
