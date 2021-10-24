@@ -5,7 +5,7 @@ import kotlin.properties.Delegates
 /*
 Inside the lambda of a scope function, the context object is available by a short reference instead of its actual name.
 Each scope function uses one of two ways to access the context object: as a lambda receiver (this) or as a lambda
-argument (it). Both provide the same capabilities
+argument (it). Both provide the same capabilities.
  */
 interface ItOrThis {
 }
@@ -21,14 +21,14 @@ fun main() {
     }
 
     // this: with, run, apply
-    str.run { println("The length of the string $str is ${this.length}") }
-    str.run { println("The length of the string $str is $length") }
-
     with(str) {
         println("To uppercase string $str is ${this.uppercase()}")
-        //Ommiting this for some object functions is impossible.
+        //Ommiting this for some object functions is impossible.`
         //println("To uppercase string $str is $uppercase()")
     }
+
+    str.run { println("The length of the string $str is ${this.length}") }
+    str.run { println("The length of the string $str is $length") }
 
     Person().apply {
         this.height = 82
