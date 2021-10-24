@@ -1,4 +1,4 @@
-package ControlFlow
+package controlFlow
 
 class When {
     fun doWhenStatement(param: Any) {

@@ -1,4 +1,4 @@
-package ScopeFunctions
+package scopeFunctions
 
 /*
 Context object : it

@@ -1,6 +1,4 @@
-package ScopeFunctions
-
-import kotlin.properties.Delegates
+package scopeFunctions
 
 /*
 Inside the lambda of a scope function, the context object is available by a short reference instead of its actual name.
@@ -23,7 +21,7 @@ fun main() {
     // this: with, run, apply
     with(str) {
         println("To uppercase string $str is ${this.uppercase()}")
-        //Ommiting this for some object functions is impossible.`
+        //Omitting this for some object functions is impossible.`
         //println("To uppercase string $str is $uppercase()")
     }
 
