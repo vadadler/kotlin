@@ -1,10 +1,10 @@
 package scopeFunctions
 
 /*
-Context object : it
-Return value   : lambda result
-Use case       : let function is often used to provide null safety calls. Use safe call operator(?.) with ‘let’ for
-                 null safety. It executes the block only with the non-null value.
+ * Context object : it
+ * Return value   : lambda result
+ * Use case       : let function is often used to provide null safety calls. Use safe call operator(?.) with ‘let’ for
+ *                   null safety. It executes the block only with the non-null value.
  */
 class LetFunction {
 }
