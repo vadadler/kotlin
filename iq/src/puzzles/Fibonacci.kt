@@ -6,43 +6,60 @@ class Fibonacci {
 }
 
 fun main() {
-    println(fibHashMap(0))
-    println(fibHashMap(1))
-    println(fibHashMap(2))
-    println(fibHashMap(3))
-    println(fibHashMap(4))
-    println(fibHashMap(5))
-    println(fibHashMap(6))
-    println(fibHashMap(7))
+//    for (i in 0..7) {
+//        println("Fib HashMap fib($i) = ${fibHashMap(i)}")
+//    }
+//
+//    println("Fib HashMap fib(-5) = ${fibHashMap(-5)}")
 
-//    val n = 1
-//    println("Fib iterative fib($n) = ${fibHashMap(n)}")
-//    println("Fib iterative fib($n) = ${fibIter(n)}")
+    for (i in 0..7) {
+        println("Fib iterative fib($i) = ${fibIter(i)}")
+    }
+
+    println("Fib iterative fib(-5) = ${fibIter(-5)}")
+
 //    println("Fib recursive $n = ${fibRecursive(n)}")
 }
 
 fun fibIter(num: Int): Int {
-    if (num == 0) return 0
+    if (num <= 0) return 0
     if (num == 1 || num == 2) return 1
 
-    var ret = 0;
-    for (i in (num - 2) downTo 0) {
-        ret += i
+    var val1 = 0
+    var val2 = 0
+
+    for (i in 3..num) {
+        val tmp = val1
+
+        if (i - 1 == 0) val1 = 0
+        else if (i - 1 == 1 || i - 1 == 2) val1 = 1
+        else val1 += val2
+
+        if (i - 2 == 0) val2 = 0
+        else if (i - 2 == 1 || i - 2 == 2) val2 = 1
+        else val2 = tmp
     }
 
-    return ret + num - 1
+    return val1 + val2
 }
 
+// Store F(N) in HashMap(N, F(N))
 fun fibHashMap(num: Int): Int {
-    if (num == 0) return 0
+    if (num <= 0) return 0
     if (num == 1 || num == 2) return 1
 
     var vals = HashMap<Int, Int>()
     for (i in 0..num - 1) {
-        if (i == 0) vals.put(i, 0)
-        else if (i == 1 || i == 2) vals.put(i, 1)
+        if (i == 0) {
+            vals.put(i, 0)
+        }
+        else if (i == 1 || i == 2) {
+            vals.put(i, 1)
+        }
         else {
-            if (!vals.containsKey(i)) vals.put(i, vals.getValue(i - 1) + vals.getValue(i - 2))
+            if (!vals.containsKey(i)) {
+                vals.put(i, vals.getValue(i - 1) + vals.getValue(i - 2))
+            }
         }
     }
 
