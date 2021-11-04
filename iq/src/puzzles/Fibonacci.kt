@@ -6,11 +6,11 @@ class Fibonacci {
 }
 
 fun main() {
-//    for (i in 0..7) {
-//        println("Fib HashMap fib($i) = ${fibHashMap(i)}")
-//    }
-//
-//    println("Fib HashMap fib(-5) = ${fibHashMap(-5)}")
+    for (i in 0..7) {
+        println("Fib HashMap fib($i) = ${fibHashMap(i)}")
+    }
+
+    println("Fib HashMap fib(-5) = ${fibHashMap(-5)}")
 
     for (i in 0..7) {
         println("Fib iterative fib($i) = ${fibIter(i)}")
@@ -18,7 +18,11 @@ fun main() {
 
     println("Fib iterative fib(-5) = ${fibIter(-5)}")
 
-//    println("Fib recursive $n = ${fibRecursive(n)}")
+    for (i in 0..7) {
+        println("Fib recursive fib($i) = ${fibRecursive(i)}")
+    }
+
+    println("Fib recursive fib(-5) = ${fibRecursive(-5)}")
 }
 
 fun fibIter(num: Int): Int {
@@ -67,8 +71,8 @@ fun fibHashMap(num: Int): Int {
 }
 
 fun fibRecursive(num: Int): Int {
-    if (num == 0) return 0
-    if (num == 1) return 1
+    if (num <= 0) return 0
+    if (num == 1 || num == 2) return 1
 
-    return fibRecursive(num + 1) + fibRecursive(num + 2)
+    return fibRecursive(num - 1) + fibRecursive(num - 2)
 }
