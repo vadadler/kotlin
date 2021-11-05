@@ -35,12 +35,11 @@ fun fibIter(num: Int): Int {
     for (i in 3..num) {
         val tmp = val1
 
-        if (i - 1 == 0) val1 = 0
-        else if (i - 1 == 1 || i - 1 == 2) val1 = 1
+        if (i - 1 == 1 || i - 1 == 2) val1 = 1
         else val1 += val2
 
-        if (i - 2 == 0) val2 = 0
-        else if (i - 2 == 1 || i - 2 == 2) val2 = 1
+
+        if (i - 2 == 1 || i - 2 == 2) val2 = 1
         else val2 = tmp
     }
 
