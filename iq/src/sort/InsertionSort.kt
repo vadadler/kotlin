@@ -30,7 +30,7 @@ fun insertionSortReverse(list: MutableList<Int>) {
     for(i in 1..list.size - 1) {
         var v = list[i]
         var j = i - 1
-        while (j >= 0 && list[j] < list[i]) {
+        while (j >= 0 && list[j] < v) {
             var v2 = list[j]
             list[j] = list[j + 1]
             list[j + 1] = v2
