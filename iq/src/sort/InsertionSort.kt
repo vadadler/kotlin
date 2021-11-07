@@ -13,11 +13,14 @@ fun main() {
 
 fun insertionSort(list: MutableList<Int>) {
     for (i in 1..list.size - 1) {
-        var v = list[i]
+        var v1 = list[i]
         var j = i - 1
-        while (j >= 0 && v < list[j]) {
-            list[i] = list[j]
-            list[j--] = v
+
+        while (j >= 0 && v1 < list[j]) {
+            val v2 = list[j + 1]
+            list[j+1] = list[j]
+            list[j] = v2
+            j -= 1
         }
     }
 }
