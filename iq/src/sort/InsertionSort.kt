@@ -1,5 +1,8 @@
 package sort
 
+/*
+ * Time complexity O(n^2). Space complexity O(1).
+ */
 class InsertionSort {
 }
 
@@ -7,8 +10,10 @@ fun main() {
     var list = mutableListOf<Int>(5,2,4,6,1,3)
 
     println("Unsorted list $list")
-    insertionSortReverse(list)
+    insertionSort(list)
     println("Sorted list $list")
+    insertionSortReverse(list)
+    println("Resorted list $list")
 }
 
 fun insertionSort(list: MutableList<Int>) {
