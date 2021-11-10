@@ -6,13 +6,15 @@ class Meta {
 fun main() {
     val listSorted = listOf(1,3,7,9,10)
     val listUnsorted = listOf(3,1,2,4,7,6)
-    val listUnsorted2 = listOf(3,1,9,4,7,2)
+//    val listUnsorted2 = listOf(3,1,9,4,7,2)
     val sum = 8
-    //var ret = twoNumSum(listSorted, sum)
+//    var ret = twoNumSum(listSorted, sum)
 //    if (ret.size == 0) println("No two elements in $list add to $sum")
 //    else println("In array $list elements ${list.get(ret.get(0))}+${list.get(ret.get(1))}=$sum")
 
-    var ret2 = twoNumSumUnsorted(listUnsorted2, sum)
+    var ret = twoNumSumUnsorted(listUnsorted,8)
+    if (ret.size == 0) println("No two elements in $listUnsorted add to $sum")
+    else println("In array $listUnsorted elements ${listUnsorted.get(ret.get(0))}+${listUnsorted.get(ret.get(1))}=$sum")
 }
 
 /*
@@ -51,26 +53,26 @@ fun twoNumSum(list: List<Int>, sum: Int): List<Int> {
     return ret
 }
 
-// Given an unsorted array, find 2 numbers that sum up to S.
-// THE STRATEGY BELOW DOES NOT WORK!
-// The strategy here is to walk input list, for each pair of numbers sum them up and subtruct desired sum and store
-// result in a set. Walk that set and see if value of 0 is there or two values add to 0. If that's the case, then
-// there are two numbers which sum is the desired one.
+// Given an unsorted array A, find 2 numbers that sum up to S.
+// Strategy: walk the array and for each element store its compliment = (S - A[n]) in a set.
+// When visiting an element check if its compliment exists in A. If it does, there
+// are two numbers which add up to S.
 fun twoNumSumUnsorted(list: List<Int>, sum: Int): List<Int> {
     var ret = mutableListOf<Int>()
     var resultsSet = mutableSetOf<Int>()
     var resultsMap = mutableMapOf<String, Int>()
 
-    for (i in 0..list.size - 2) {
-        var value = list[i] + list[i + 1] - sum
-        resultsSet.add(value)
-        resultsMap.put("$i", value)
-    }
+    for (i in list.indices) {
+        val compliment = sum - list[i]
 
-    for (i in 0..resultsSet.size - 2) {
-        if (resultsSet.elementAt(i) + resultsSet.elementAt(i + 1) == 0 ) {
-
+        for (j in i + 1 until list.size) {
+            if (list[j] == compliment) {
+                ret.add(0, i)
+                ret.add(1, j)
+                return ret;
+            }
         }
     }
+
     return ret
 }
