@@ -1,5 +1,7 @@
 package co
 
+import java.util.*
+
 class Meta {
 }
 
@@ -76,3 +78,29 @@ fun twoNumSumUnsorted(list: List<Int>, sum: Int): List<Int> {
 
     return ret
 }
+
+/**
+ * Determine if any 3 integers in an array sum to S.
+ * @param arr input array
+ * @param sum sum
+ *
+ * Brute force approach. Make 3 nested loops and iterate through to find solution.
+ * Time complexity O(N^3)
+ */
+private fun threeSumBruteForce(arr: IntArray, sum: Int) {
+    println("Find sum=" + sum + " in array " + Arrays.toString(arr))
+    val size = arr.size
+    for (i in 0 until size) {
+        for (j in i + 1 until size) {
+            for (k in j + 1 until size) {
+                val currSum = arr[i] + arr[j] + arr[k]
+                if (currSum == sum) {
+                    println("3sum found: " + arr[i] + "+" + arr[j] + "+" + arr[k] + "=" + sum)
+                    return
+                }
+            }
+        }
+    }
+    println("3sum not found: array " + Arrays.toString(arr) + " to find sum=" + sum)
+}
+
