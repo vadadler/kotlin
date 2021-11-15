@@ -1,51 +1,57 @@
 package datastructures
 
-class Stack {
-    private var data =  mutableListOf<Any>()
-    private var size = 0
+interface IStack<T: Any> {
+    fun push(element: T)
+    fun peek(): T?
+    fun pop(): T?
+    val size: Int
+        get() = size
+    val count: Int
+    val isEmpty: Boolean
+        get() = count == 0
+}
 
-    fun push(element: Any) {
+class Stack<T: Any>: IStack<T> {
+    private var data =  mutableListOf<T>()
+
+    override fun push(element: T) {
         data.add(element)
-        size++
     }
 
-    fun pop(): Any {
-        val v = data[size - 1]
-        data.removeAt(size - 1)
-        size--
-        return v
+    override val size: Int
+        get() = data.size
+
+    override fun pop(): T? {
+        if (size == 0) return null
+        return data.removeAt(size - 1)
     }
 
-    fun peek(): Any {
-        return data[size - 1]
-    }
-
-    fun isEmtpy(): Boolean {
-        return data.size > 0
-    }
-
-    fun size(): Int {
-        return data.size
+    override fun peek(): T? {
+        return data.lastOrNull()
     }
 
     fun ts(): String {
         return data.toString()
     }
+
+    override val count: Int
+        get() = size
 }
 
 fun main() {
-    var s = Stack()
-    s.push(3)
-    s.push(4)
+    var s = Stack<Int>().apply {
+        push(3)
+        push(4)
+    }.also {
+        println("Stack -> ${it.ts()}")
+        println("Pop -> ${it.pop()}")
+        println("Stack -> ${it.ts()}")
+    }.also {
+        it.push(5)
+        it.push(2)
 
-    println("Stack -> ${s.ts()}")
-    println("Pop -> ${s.pop()}")
-    println("Stack -> ${s.ts()}")
-
-    s.push("one")
-    s.push(2)
-
-    println("Stack -> ${s.ts()}")
-    println("Pop -> ${s.pop()}")
-    println("Stack -> ${s.ts()}")
+        println("Stack -> ${it.ts()}")
+        println("Pop -> ${it.pop()}")
+        println("Stack -> ${it.ts()}")
+    }
 }
