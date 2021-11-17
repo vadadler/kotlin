@@ -1,11 +1,10 @@
 package arrays
 
 class MoveZeros {
-
 }
+// Keep two indexes. One pointing to element with 0 and the other !0 element.
 
 fun moveZerosToBack(arr: MutableList<Int>) {
-    // Keep two indexes. One pointing to element with 0 and the other !0 element.
     var i = 0 // 0 element.
     var j = 0 // where to place !0 element.
 

@@ -1,5 +1,10 @@
 package datastructures
 
+/*
+ * Stacks are crucial to problems that search trees and graphs. Imagine finding your way through a maze. Each time you
+ * come to a decision point of left, right or straight, you can push all possible decisions onto your stack. When you
+ * hit a dead end, backtrack by popping from the stack and continuing until you escape or hit another dead end.
+ */
 interface IStack<T: Any> {
     fun push(element: T)
     fun peek(): T?
