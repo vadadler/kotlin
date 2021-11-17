@@ -30,7 +30,7 @@ class Stack<T: Any>: IStack<T> {
         return data.lastOrNull()
     }
 
-    fun ts(): String {
+    override fun toString(): String {
         return data.toString()
     }
 
@@ -43,15 +43,15 @@ fun main() {
         push(3)
         push(4)
     }.also {
-        println("Stack -> ${it.ts()}")
-        println("Pop -> ${it.pop()}")
-        println("Stack -> ${it.ts()}")
+        println("Stack -> ${it}")
+        println("Pop -> ${it}")
+        println("Stack -> ${it}")
     }.also {
         it.push(5)
         it.push(2)
 
-        println("Stack -> ${it.ts()}")
+        println("Stack -> ${it}")
         println("Pop -> ${it.pop()}")
-        println("Stack -> ${it.ts()}")
+        println("Stack -> ${it}")
     }
 }

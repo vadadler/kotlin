@@ -1,7 +1,5 @@
 package strings
 
-import java.util.*
-
 class LongestPrefix {
     // Given a set of strings, find the longest common prefix.
     // Algorithm assumes, that after sorting the shortest string is the first one.
