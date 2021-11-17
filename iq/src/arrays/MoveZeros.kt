@@ -24,14 +24,27 @@ fun moveZerosToBack(arr: MutableList<Int>) {
 }
 
 fun moveZerosToFront(arr: MutableList<Int>) {
+    var i = arr.size - 1 // tracks 0 element.
+    var j = arr.size - 1 // where to plase !0 element.
 
+    while (i >= 0) {
+        if (arr[i] == 0) {
+            i--
+        }
+        else {
+            arr[j--] = arr[i--]
+        }
+    }
+
+    while (j >= 0) arr[j--] = 0
 }
 
 fun main() {
     var arr = mutableListOf<Int>(0,2,1,0,6,0)
     println("Array before: $arr")
     moveZerosToBack(arr)
-    println("Array after: $arr")
-//    print("Array after 2: ${moveZerosToFront(arr)}")
+    println("Array after to back: $arr")
+    moveZerosToFront(arr)
+    print("Array after to front: $arr")
 }
 
