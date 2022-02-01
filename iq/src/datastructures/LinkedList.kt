@@ -1,9 +1,55 @@
 package datastructures
 
+/*
+    Methods:
+    push(value: T) Insert node at the head.
+    append(value: T) Insert node at the tail.
+    isEmpty(): Boolean Check if list is empty.
+    insertAt(position: Int) Insert node at position.
+    getAt(position: Int)?: Node Get node at position.
+    deleteAt(position: Int) Delete node at position.
+ */
 class LinkedList<T: Any> {
     var head: Node<T>? = null
     var tail: Node<T>? = null
     var size = 0
+
+    fun isEmpty(): Boolean {
+        return when (size) {
+            0 -> true
+            else -> false
+        }
+    }
+
+    private fun getAt(pos: Int): Node<T>? {
+        if(pos > size || pos <= 0) return null
+
+        var node = head
+
+        for (i in 1..size + 1) {
+            if (i == pos) return node
+            node = node?.next
+        }
+
+        return node
+    }
+
+    // insertAt(2, 0)
+    // 1-->2-->3-->4
+    //     ^
+    // 1-->0-->2-->3-->4
+    // If pos <= 0 Insert at head. If pos > size Insert at tail.
+    fun insertAt(pos: Int, value: T) {
+        val node = getAt(pos - 1)
+
+        if (node != null) {
+            node.next = Node(value, node.next)
+        }
+        else { // Insert at head or at tail.
+            if (pos == 0) push(value)
+            else append(value)
+        }
+    }
 
     // Add node at the front/head.
     fun push(value: T) {
@@ -11,6 +57,7 @@ class LinkedList<T: Any> {
 
         if(head == null) {
             head = n
+            tail = n
         } else {
             n.next = head
             head = n
@@ -37,7 +84,7 @@ class LinkedList<T: Any> {
     }
 
     // Insert node at a position in the list.
-    fun insertAt(pos: Int, n: Node<T>) {
+    fun insertAt2(pos: Int, n: Node<T>) {
         var nodeToInsertAt = head
 
         // A little optimization.
@@ -84,14 +131,13 @@ data class Node<T: Any>(var value: T, var next: Node<T>?) {
 fun main() {
     var ll = LinkedList<Int>()
     with(ll) {
-        push(2)
-        append(1)
-        push(3)
-        append(6)
         push(4)
+        push(3)
+        push(2)
+        push(1)
 
         println("Before insert $this")
-        insertAt(2, Node(7, null))
+        insertAt(4, 0)
         println("After insert $this")
     }
 }
