@@ -14,6 +14,20 @@ class LinkedList<T: Any> {
     var tail: Node<T>? = null
     var size = 0
 
+    data class Node<T: Any> (val value: T, var next: Node<T>?) {
+        override fun toString(): String {
+            var ret: String
+
+            if(next != null) {
+                ret = "-->${next.toString()}"
+            } else {
+                return value.toString()
+            }
+
+            return ret
+        }
+    }
+
     fun isEmpty(): Boolean {
         return when (size) {
             0 -> true
@@ -119,14 +133,14 @@ class LinkedList<T: Any> {
     }
 }
 
-data class Node<T: Any>(var value: T, var next: Node<T>?) {
-    override fun toString(): String {
-        if (next != null) {
-            return "$value --> ${next.toString()}"
-        }
-        return "$value"
-    }
-}
+//data class Node2<T: Any>(var value: T, var next: Node<T>?) {
+//    override fun toString(): String {
+//        if (next != null) {
+//            return "$value --> ${next.toString()}"
+//        }
+//        return "$value"
+//    }
+//}
 
 fun main() {
     var ll = LinkedList<Int>()
