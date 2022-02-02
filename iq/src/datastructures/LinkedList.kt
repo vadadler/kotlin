@@ -16,15 +16,7 @@ class LinkedList<T: Any> {
 
     data class Node<T: Any> (val value: T, var next: Node<T>?) {
         override fun toString(): String {
-            var ret: String
-
-            if(next != null) {
-                ret = "-->${next.toString()}"
-            } else {
-                return value.toString()
-            }
-
-            return ret
+            return value.toString()
         }
     }
 
@@ -63,11 +55,33 @@ class LinkedList<T: Any> {
             if (pos == 0) push(value)
             else append(value)
         }
+
+        size++
+    }
+
+    // deleteAt(2)
+    //1-->2-->3-->4
+    //    ^
+    //1-->3-->4
+    fun deleteAt(pos: Int) {
+        val prevNode = getAt(pos - 1)
+        if (prevNode == null) {
+            head = head?.next
+        }
+        else {
+            prevNode?.next = prevNode?.next?.next
+
+            if(prevNode?.next == null) {
+                tail = prevNode
+            }
+        }
+
+        size--
     }
 
     // Add node at the front/head.
     fun push(value: T) {
-        val n = Node(value, head)
+        val n = Node(value, null)
 
         if(head == null) {
             head = n
@@ -131,16 +145,22 @@ class LinkedList<T: Any> {
 
         return str.toString()
     }
-}
 
-//data class Node2<T: Any>(var value: T, var next: Node<T>?) {
-//    override fun toString(): String {
-//        if (next != null) {
-//            return "$value --> ${next.toString()}"
-//        }
-//        return "$value"
-//    }
-//}
+    fun deDup() {
+        var tmp: HashSet<Any?> = HashSet()
+        var node = head
+        while (node?.next != null) {
+            if (tmp.contains(node?.next?.value)) {
+                node.next = node?.next?.next
+                size--
+            }
+            else {
+                tmp.add(node.value)
+            }
+            node = node.next
+        }
+    }
+}
 
 fun main() {
     var ll = LinkedList<Int>()
@@ -149,9 +169,28 @@ fun main() {
         push(3)
         push(2)
         push(1)
+        push(3)
+
+        println("head: $head")
+        println("tail: $tail")
 
         println("Before insert $this")
         insertAt(4, 0)
         println("After insert $this")
+
+        println("head: $head")
+        println("tail: $tail")
+
+//        println("Before delete $this")
+//        deleteAt(1)
+//        println("After delete $this")
+
+        println("head: $head")
+        println("tail: $tail")
+
+        println("Before deDup $this")
+        deDup()
+        println("After deDup $this")
+
     }
 }
