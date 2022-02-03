@@ -152,6 +152,9 @@ class LinkedList<T: Any> {
         while (node?.next != null) {
             if (tmp.contains(node?.next?.value)) {
                 node.next = node?.next?.next
+                if (node.next == null) {
+                    tail = node
+                }
                 size--
             }
             else {
@@ -181,6 +184,8 @@ fun main() {
         println("head: $head")
         println("tail: $tail")
 
+        append(3)
+
 //        println("Before delete $this")
 //        deleteAt(1)
 //        println("After delete $this")
@@ -192,5 +197,7 @@ fun main() {
         deDup()
         println("After deDup $this")
 
+        println("head: $head")
+        println("tail: $tail")
     }
 }
