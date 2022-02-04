@@ -101,29 +101,95 @@ class SinglyLinkedList<T: Any> {
         return node
     }
 
+    // Using helper HashSet.
+    fun deDup() {
+        var values = HashSet<T>()
+
+        var node = head
+        var prevNode = head
+
+        while (node != null) {
+            if (values.contains(node?.value)) {
+                prevNode?.next = node?.next
+                size--
+
+                if (node == tail) {
+                    tail = prevNode
+                }
+            } else {
+                if (node != null) {
+                    values.add(node.value)
+                }
+            }
+            prevNode = node
+            node = node?.next
+        }
+    }
+
+    // Alternative to having temp storage.
+    // deDup starting from head to tail.
+    // then from head.next to tail
+    // then from head.next.next to tail etc.
+    fun deDup2() {
+        var h =  head
+        var t = tail
+        dd(h, t)
+    }
+
+    private fun dd(h: Node<T>?, t: Node<T>?) {
+        val value = h?.value
+        var node = h?.next
+        var prevNode = h
+
+        if (node == null) return
+
+        while (node != null || node == t) {
+            if (node?.value == value) {
+                if (node == t) {
+                    tail = prevNode
+                }
+                prevNode?.next = node?.next
+                size--
+            }
+            else {
+                prevNode = node
+            }
+
+            node = node?.next
+        }
+
+        dd(h?.next, t)
+    }
 }
 
 fun main() {
     var list = SinglyLinkedList<Int>()
 
     with(list) {
+        push(1)
         push(4)
         push(3)
         push(2)
         push(1)
         append(5)
+        append(4)
 
         println(list)
         println("Head: $head")
         println("Tail: $tail")
+//
+//        insertAt(0, 5)
+//        println("After insert: $list")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//        deleteAt(1)
+//        println("After delete: $list")
+//        println("Head: $head")
+//        println("Tail: $tail")
 
-        insertAt(0, 5)
-        println("After insert: $list")
-        println("Head: $head")
-        println("Tail: $tail")
-
-        deleteAt(1)
-        println("After delete: $list")
+        deDup2()
+        println("After deDup: $list")
         println("Head: $head")
         println("Tail: $tail")
 
