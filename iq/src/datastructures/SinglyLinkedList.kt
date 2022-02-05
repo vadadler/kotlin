@@ -6,13 +6,15 @@ package datastructures
  push(value: Any) Add node at the head.
  append(value: Any) Add node at the tail.
  getAt(pos: Int): Node Get node at a position.
+ getNthFromTail(pos: Int): Node Get Nth node from the tail.
  insertAt(pos: Int) Insert node at a position.
  deleteAt(pos: Int) Delete node at a position.
  deDup() Remove duplicate nodes.
  isEmpty(): Boolean Check if list is empty.
+ deleteNthNode() Delete Nth node. You have access to Nth node only.
  */
 class SinglyLinkedList<T: Any> {
-    data class Node<T:Any>(val value: T, var next: Node<T>? = null) {
+    data class Node<T:Any>(var value: T, var next: Node<T>? = null) {
         override fun toString(): String {
             return value.toString()
         }
@@ -55,6 +57,7 @@ class SinglyLinkedList<T: Any> {
             tail?.next = node
         }
         tail = node
+        size++
     }
 
     fun insertAt(value: T, pos: Int) {
@@ -101,6 +104,22 @@ class SinglyLinkedList<T: Any> {
         return node
     }
 
+    fun getAtPos(pos: Int): Node<T>? {
+        var node = head
+        for (i in 1..size) {
+            if (i == pos) {
+                return node
+            }
+            node = node?.next
+        }
+
+        return null
+    }
+
+    fun getNthFromTail(pos: Int):Node<T>? {
+        return getAtPos(size - pos + 2)
+    }
+
     // Using helper HashSet.
     fun deDup() {
         var values = HashSet<T>()
@@ -126,26 +145,26 @@ class SinglyLinkedList<T: Any> {
         }
     }
 
+    // Recursive solution.
     // Alternative to having temp storage.
     // deDup starting from head to tail.
     // then from head.next to tail
     // then from head.next.next to tail etc.
     fun deDup2() {
         var h =  head
-        var t = tail
-        dd(h, t)
+        dd(h)
     }
 
-    private fun dd(h: Node<T>?, t: Node<T>?) {
+    private fun dd(h: Node<T>?) {
         val value = h?.value
         var node = h?.next
         var prevNode = h
 
         if (node == null) return
 
-        while (node != null || node == t) {
+        while (node != null || node == tail) {
             if (node?.value == value) {
-                if (node == t) {
+                if (node == tail) {
                     tail = prevNode
                 }
                 prevNode?.next = node?.next
@@ -158,7 +177,25 @@ class SinglyLinkedList<T: Any> {
             node = node?.next
         }
 
-        dd(h?.next, t)
+        dd(h?.next)
+    }
+
+    // You don't have access to list's head.
+    // Copy value from next to current. Repeat until the end.
+    fun deleteNthNode(pos: Int) {
+        var node = getAtPos(pos)
+        while(node?.next != null) {
+            node?.value = node?.next?.value!!
+            if (node?.next?.next != null) {
+                node = node.next
+            } else {
+                break
+            }
+        }
+
+        node?.next = null
+        tail = node
+        size--
     }
 }
 
@@ -190,6 +227,17 @@ fun main() {
 
         deDup2()
         println("After deDup: $list")
+        println("Head: $head")
+        println("Tail: $tail")
+
+
+        val node = getNthFromTail(3)
+        println("getNthFromTail: $node")
+        println("Head: $head")
+        println("Tail: $tail")
+
+       deleteNthNode(3)
+        println("After delete: $list")
         println("Head: $head")
         println("Tail: $tail")
 
