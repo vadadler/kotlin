@@ -116,8 +116,31 @@ class SinglyLinkedList<T: Any> {
         return null
     }
 
+    // If size is known.
     fun getNthFromTail(pos: Int):Node<T>? {
-        return getAtPos(size - pos + 2)
+        return getAtPos(size - pos + 1)
+    }
+
+    // Size is unknown.
+    fun getNthFromTailNoSize(pos: Int): Node<T>? {
+        var node = head
+        var tempNode = head
+
+        for (i in 1..size) {
+            tempNode = node
+
+            for (j in 1..pos - 1) {
+                tempNode = tempNode?.next
+            }
+
+            if (tempNode?.next == null) {
+                break
+            }
+
+            node = node?.next
+        }
+
+        return node
     }
 
     // Using helper HashSet.
@@ -231,12 +254,18 @@ fun main() {
         println("Tail: $tail")
 
 
-        val node = getNthFromTail(3)
-        println("getNthFromTail: $node")
+        val pos = 3
+        var node = getNthFromTail(pos)
+        println("getNthFromTail($pos): $node")
         println("Head: $head")
         println("Tail: $tail")
 
-       deleteNthNode(3)
+        node = getNthFromTailNoSize(pos)
+        println("getNthFromTailNoSize($pos): $node")
+        println("Head: $head")
+        println("Tail: $tail")
+
+        deleteNthNode(3)
         println("After delete: $list")
         println("Head: $head")
         println("Tail: $tail")
