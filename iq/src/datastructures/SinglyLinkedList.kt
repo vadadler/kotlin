@@ -126,13 +126,14 @@ class SinglyLinkedList<T: Any> {
         var node = head
         var tempNode = head
 
-        for (i in 1..size) {
+        while (node?.next != null) {
             tempNode = node
 
             for (j in 1..pos - 1) {
                 tempNode = tempNode?.next
             }
 
+            // At the tail.
             if (tempNode?.next == null) {
                 break
             }
@@ -142,6 +143,27 @@ class SinglyLinkedList<T: Any> {
 
         return node
     }
+
+    fun getNthFromTailNoSizeRecursive(pos: Int): Node<T>? {
+        return getRecursively(head, pos)
+    }
+
+    private fun getRecursively(node: Node<T>?, pos: Int): Node<T>? {
+        var tempNode = node
+
+        for (i in 1..pos - 1) {
+            tempNode = tempNode?.next
+        }
+
+        // At the tail.
+        if (tempNode?.next == null) {
+            return node
+        }
+        else {
+            return getRecursively(node?.next, pos)
+        }
+    }
+
 
     // Using helper HashSet.
     fun deDup() {
@@ -174,8 +196,7 @@ class SinglyLinkedList<T: Any> {
     // then from head.next to tail
     // then from head.next.next to tail etc.
     fun deDup2() {
-        var h =  head
-        dd(h)
+        dd(head)
     }
 
     private fun dd(h: Node<T>?) {
@@ -265,11 +286,15 @@ fun main() {
         println("Head: $head")
         println("Tail: $tail")
 
-        deleteNthNode(3)
-        println("After delete: $list")
+        node = getNthFromTailNoSizeRecursive(pos)
+        println("getNthFromTailNoSizeRecursive($pos): $node")
         println("Head: $head")
         println("Tail: $tail")
 
+//        deleteNthNode(3)
+//        println("After delete: $list")
+//        println("Head: $head")
+//        println("Tail: $tail")
     }
 
 }
