@@ -1,5 +1,7 @@
 package datastructures
 
+import kotlin.math.pow
+
 /*
  Methods to implement:
  toString() For both list and single node.
@@ -286,64 +288,119 @@ class SinglyLinkedList<T: Any> {
     }
 }
 
-fun main() {
-    var list = SinglyLinkedList<Int>()
+// Lists are the same length.
+fun addTwoLists(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): SinglyLinkedList<Int> {
+    var node1 = list1.head
+    var node2 = list2.head
 
-    with(list) {
-        push(2)
-        push(1)
-        push(3)
-        push(5)
-        push(4)
-        append(5)
-        append(4)
+    var sum1 = 0
+    var sum2 = 0
 
-        println(list)
-        println("Head: $head")
-        println("Tail: $tail")
-//
-//        insertAt(0, 5)
-//        println("After insert: $list")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//        deleteAt(1)
-//        println("After delete: $list")
-//        println("Head: $head")
-//        println("Tail: $tail")
+    for (i in 0..list1.size - 1) {
+        sum1 += (node1?.value!!) * (10.0).pow(i).toInt()
+        sum2 += (node2?.value!!) * (10.0).pow(i).toInt()
 
-        deDup2()
-        println("After deDup: $list")
-        println("Head: $head")
-        println("Tail: $tail")
-
-
-        val pos = 3
-        var node = getNthFromTail(pos)
-        println("getNthFromTail($pos): $node")
-        println("Head: $head")
-        println("Tail: $tail")
-
-        node = getNthFromTailNoSize(pos)
-        println("getNthFromTailNoSize($pos): $node")
-        println("Head: $head")
-        println("Tail: $tail")
-
-        node = getNthFromTailNoSizeRecursive(pos)
-        println("getNthFromTailNoSizeRecursive($pos): $node")
-        println("Head: $head")
-        println("Tail: $tail")
-
-        val value = 3
-        partitionListAroundValue(value)
-        println("After partitionListAroundValue($value): $list")
-        println("Head: $head")
-        println("Tail: $tail")
-
-//        deleteNthNode(3)
-//        println("After delete: $list")
-//        println("Head: $head")
-//        println("Tail: $tail")
+        node1 = node1.next
+        node2 = node2.next
     }
+
+    val sum = sum1 + sum2
+
+    println("Sum1=${sum1}")
+    println("Sum2=${sum2}")
+    println("Sum=${sum}")
+
+    var linkedList = SinglyLinkedList<Int>()
+    for (i in list1.size - 1 downTo 0) {
+        var value = sum / (10.0).pow(i).toInt()
+        linkedList.push(value)
+    }
+    return linkedList
+}
+
+fun main() {
+    var list1 = SinglyLinkedList<Int>()
+    var list2 = SinglyLinkedList<Int>()
+
+    with(list1) {
+        push(6)
+        push(1)
+        push(7)
+
+        println(this)
+        println("Head: $head")
+        println("Tail: $tail")
+
+    }
+
+    with(list2) {
+        push(2)
+        push(9)
+        push(5)
+
+        println(this)
+        println("Head: $head")
+        println("Tail: $tail")
+    }
+
+    val linkedList = addTwoLists(list1, list2)
+    println("After adding two lists: $linkedList")
+
+//    with(list) {
+//        push(2)
+//        push(1)
+//        push(3)
+//        push(5)
+//        push(4)
+//        append(5)
+//        append(4)
+//
+//        println(list)
+//        println("Head: $head")
+//        println("Tail: $tail")
+////
+////        insertAt(0, 5)
+////        println("After insert: $list")
+////        println("Head: $head")
+////        println("Tail: $tail")
+////
+////        deleteAt(1)
+////        println("After delete: $list")
+////        println("Head: $head")
+////        println("Tail: $tail")
+//
+//        deDup2()
+//        println("After deDup: $list")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//
+//        val pos = 3
+//        var node = getNthFromTail(pos)
+//        println("getNthFromTail($pos): $node")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//        node = getNthFromTailNoSize(pos)
+//        println("getNthFromTailNoSize($pos): $node")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//        node = getNthFromTailNoSizeRecursive(pos)
+//        println("getNthFromTailNoSizeRecursive($pos): $node")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//        val value = 3
+//        partitionListAroundValue(value)
+//        println("After partitionListAroundValue($value): $list")
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+////        deleteNthNode(3)
+////        println("After delete: $list")
+////        println("Head: $head")
+////        println("Tail: $tail")
+//    }
 
 }
