@@ -7,21 +7,24 @@ package datastructures
  append(value: Any) Add node at the tail.
  getAt(pos: Int): Node Get node at a position.
  getNthFromTail(pos: Int): Node Get Nth node from the tail.
+ getNthFromTailNoSize(pos: Int): Node. Get Nth node from tail not knowing size of the list.
+ getNthFromTailNoSizeRecursive(pos: Int): Node. Get Nth node from tail not knowing size of the list. Use recursion.
  insertAt(pos: Int) Insert node at a position.
  deleteAt(pos: Int) Delete node at a position.
  deDup() Remove duplicate nodes.
  isEmpty(): Boolean Check if list is empty.
  deleteNthNode() Delete Nth node. You have access to Nth node only.
+ partitionListAroundValue(value: T> Partition list around value, such that all nodes with less value are left and grater values are right to that value.
  */
 class SinglyLinkedList<T: Any> {
-    data class Node<T:Any>(var value: T, var next: Node<T>? = null) {
+    data class Node<Int>(var value: Int, var next: Node<Int>? = null) {
         override fun toString(): String {
             return value.toString()
         }
     }
 
-    var head: Node<T>? = null
-    var tail: Node<T>? = null
+    var head: Node<Int>? = null
+    var tail: Node<Int>? = null
     var size = 0
 
     fun isEmpty(): Boolean {
@@ -40,7 +43,7 @@ class SinglyLinkedList<T: Any> {
         return ret.toString()
     }
 
-    fun push(value: T) {
+    fun push(value: Int) {
         var node = Node(value, null)
         node.next = head
         head = node
@@ -51,7 +54,7 @@ class SinglyLinkedList<T: Any> {
         }
     }
 
-    fun append(value: T) {
+    fun append(value: Int) {
         var node = Node(value, null)
         if (tail != null) {
             tail?.next = node
@@ -60,7 +63,7 @@ class SinglyLinkedList<T: Any> {
         size++
     }
 
-    fun insertAt(value: T, pos: Int) {
+    fun insertAt(value: Int, pos: Int) {
         var node = Node(value, null)
 
         if (pos == 1) {
@@ -92,7 +95,7 @@ class SinglyLinkedList<T: Any> {
         size--
     }
 
-    fun getAt(pos: Int): Node<T>? {
+    fun getAt(pos: Int): Node<Int>? {
         if (pos <= 0 || pos > size) return null
 
         var node = head;
@@ -104,7 +107,7 @@ class SinglyLinkedList<T: Any> {
         return node
     }
 
-    fun getAtPos(pos: Int): Node<T>? {
+    fun getAtPos(pos: Int): Node<Int>? {
         var node = head
         for (i in 1..size) {
             if (i == pos) {
@@ -117,12 +120,12 @@ class SinglyLinkedList<T: Any> {
     }
 
     // If size is known.
-    fun getNthFromTail(pos: Int):Node<T>? {
+    fun getNthFromTail(pos: Int):Node<Int>? {
         return getAtPos(size - pos + 1)
     }
 
     // Size is unknown.
-    fun getNthFromTailNoSize(pos: Int): Node<T>? {
+    fun getNthFromTailNoSize(pos: Int): Node<Int>? {
         var node = head
         var tempNode = head
 
@@ -144,11 +147,11 @@ class SinglyLinkedList<T: Any> {
         return node
     }
 
-    fun getNthFromTailNoSizeRecursive(pos: Int): Node<T>? {
+    fun getNthFromTailNoSizeRecursive(pos: Int): Node<Int>? {
         return getRecursively(head, pos)
     }
 
-    private fun getRecursively(node: Node<T>?, pos: Int): Node<T>? {
+    private fun getRecursively(node: Node<Int>?, pos: Int): Node<Int>? {
         var tempNode = node
 
         for (i in 1..pos - 1) {
@@ -164,10 +167,50 @@ class SinglyLinkedList<T: Any> {
         }
     }
 
+    // Assume values are unique in the list.
+    // Walk the list. If value is less then make that node head. If greater make it tail.
+    fun partitionListAroundValue(value: Int) {
+        var node = head
+        var prevNode = head
+
+        for (i in 1..size + 1) {
+            if (node == null) return
+
+            if (node?.value > value) {  // Move node to the tail.
+                if (node == head) {
+                    head = node?.next
+                    tail?.next = node
+                    tail = node
+                    tail?.next = null
+                    node = head
+                } else {
+                    prevNode?.next = node?.next
+                    tail?.next = prevNode
+                    tail = prevNode
+                    node = node.next
+                }
+            } else if (node?.value < value) { // Move node to the head.
+                if (node == tail) {
+                    node.next = head
+                    head = node
+                    tail = prevNode
+                } else if (node != head) {
+                    prevNode?.next = node.next
+                    node.next = head
+                    head = node
+                }
+                prevNode = node
+                node = node.next
+            } else {    // Do nothing/.
+                prevNode = node
+                node = node.next
+            }
+        }
+    }
 
     // Using helper HashSet.
     fun deDup() {
-        var values = HashSet<T>()
+        var values = HashSet<Int>()
 
         var node = head
         var prevNode = head
@@ -199,7 +242,7 @@ class SinglyLinkedList<T: Any> {
         dd(head)
     }
 
-    private fun dd(h: Node<T>?) {
+    private fun dd(h: Node<Int>?) {
         val value = h?.value
         var node = h?.next
         var prevNode = h
@@ -247,11 +290,11 @@ fun main() {
     var list = SinglyLinkedList<Int>()
 
     with(list) {
-        push(1)
-        push(4)
-        push(3)
         push(2)
         push(1)
+        push(3)
+        push(5)
+        push(4)
         append(5)
         append(4)
 
@@ -288,6 +331,12 @@ fun main() {
 
         node = getNthFromTailNoSizeRecursive(pos)
         println("getNthFromTailNoSizeRecursive($pos): $node")
+        println("Head: $head")
+        println("Tail: $tail")
+
+        val value = 3
+        partitionListAroundValue(value)
+        println("After partitionListAroundValue($value): $list")
         println("Head: $head")
         println("Tail: $tail")
 
