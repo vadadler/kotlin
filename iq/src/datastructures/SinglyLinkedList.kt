@@ -310,9 +310,11 @@ fun addTwoLists(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Sin
     println("Sum2=${sum2}")
     println("Sum=${sum}")
 
+    var remainder = sum
     var linkedList = SinglyLinkedList<Int>()
     for (i in list1.size - 1 downTo 0) {
-        var value = sum / (10.0).pow(i).toInt()
+        var value = remainder / (10.0).pow(i).toInt()
+        remainder = remainder % (10.0).pow(i).toInt()
         linkedList.push(value)
     }
     return linkedList
