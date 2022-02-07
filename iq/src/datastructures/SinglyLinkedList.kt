@@ -17,6 +17,7 @@ import kotlin.math.pow
  isEmpty(): Boolean Check if list is empty.
  deleteNthNode() Delete Nth node. You have access to Nth node only.
  partitionListAroundValue(value: T> Partition list around value, such that all nodes with less value are left and grater values are right to that value.
+ isPalindrome(): Boolean Check if SLL palindrome.
  */
 class SinglyLinkedList<T: Any> {
     data class Node<Int>(var value: Int, var next: Node<Int>? = null) {
@@ -290,10 +291,34 @@ class SinglyLinkedList<T: Any> {
         tail = node
         size--
     }
+
+    fun isPalindrome(): Boolean {
+        var isPalindrome = true
+
+        var i = 0
+        var j = size
+
+        var nodei = head
+        var nodej = tail
+
+        while (i <= j) {
+            if (nodei?.value != nodej?.value) {
+                return false
+            }
+
+            i++
+            j--
+
+            nodei = nodei?.next
+            nodej = getAt(j)
+        }
+
+        return isPalindrome
+    }
 }
 
 // Lists are the same length.
-// Two numbers represented as SLL where each node contains single digit. The digists are stored in reverse order.
+// Two numbers represented as SLL where each node contains single digit. The digits are stored in reverse order.
 // Example:
 // Input: (7->1->6) + (5->9->2) That is 617+295
 // Output: 2->1->9 That is, 912
@@ -328,6 +353,11 @@ fun addTwoLists(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Sin
     return linkedList
 }
 
+// Lists are the same length.
+// Two numbers represented as SLL where each node contains single digit.
+// Example:
+// Input: (7->1->6) + (5->9->2) That is 716+295
+// Output: 1->3->0->8 That is, 1308
 fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): SinglyLinkedList<Int> {
     var sum1 = 0
     var sum2 = 0
@@ -365,33 +395,48 @@ fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Si
 }
 
 fun main() {
-    var list1 = SinglyLinkedList<Int>()
-    var list2 = SinglyLinkedList<Int>()
-
-    with(list1) {
-        push(6)
-        push(1)
-        push(7)
-
-        println(this)
-        println("Head: $head")
-        println("Tail: $tail")
-
-    }
-
-    with(list2) {
+    var sll = SinglyLinkedList<Int>()
+    with(sll) {
+//        push(3)
         push(2)
-        push(9)
-        push(5)
+        push(1)
+        append(2)
+        append(1)
 
         println(this)
         println("Head: $head")
         println("Tail: $tail")
+
+        println("Is list $this palindroime? ${isPalindrome()}")
     }
 
-    val linkedList = addTwoLists2(list1, list2)
-    println("After adding two lists: $linkedList")
 
+//    var list1 = SinglyLinkedList<Int>()
+//    var list2 = SinglyLinkedList<Int>()
+//
+//    with(list1) {
+//        push(6)
+//        push(1)
+//        push(7)
+//
+//        println(this)
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//    }
+//
+//    with(list2) {
+//        push(2)
+//        push(9)
+//        push(5)
+//
+//        println(this)
+//        println("Head: $head")
+//        println("Tail: $tail")
+//    }
+//
+//    val linkedList = addTwoLists2(list1, list2)
+//    println("After adding two lists: $linkedList")
 //    with(list) {
 //        push(2)
 //        push(1)
