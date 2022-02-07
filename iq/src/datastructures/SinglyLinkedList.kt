@@ -61,6 +61,10 @@ class SinglyLinkedList<T: Any> {
         if (tail != null) {
             tail?.next = node
         }
+
+        if (head == null) {
+            head = node
+        }
         tail = node
         size++
     }
@@ -289,6 +293,10 @@ class SinglyLinkedList<T: Any> {
 }
 
 // Lists are the same length.
+// Two numbers represented as SLL where each node contains single digit. The digists are stored in reverse order.
+// Example:
+// Input: (7->1->6) + (5->9->2) That is 617+295
+// Output: 2->1->9 That is, 912
 fun addTwoLists(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): SinglyLinkedList<Int> {
     var node1 = list1.head
     var node2 = list2.head
@@ -320,6 +328,42 @@ fun addTwoLists(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Sin
     return linkedList
 }
 
+fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): SinglyLinkedList<Int> {
+    var sum1 = 0
+    var sum2 = 0
+    var node1 = list1.head
+    var node2 = list2.head
+
+    for (i in list1.size - 1 downTo 0) {
+        sum1 += node1?.value!! * 10.0.pow(i).toInt()
+        sum2 += node2?.value!! * 10.0.pow(i).toInt()
+        node1 = node1.next
+        node2 = node2.next
+    }
+
+    var sum = sum1 + sum2
+
+    println("Sum1=${sum1}")
+    println("Sum2=${sum2}")
+    println("Sum=${sum}")
+
+    var remainder1 = sum1
+    var remainder2 = sum2
+
+    var remainder = sum
+    var retList = SinglyLinkedList<Int>()
+
+    var numDigits = sum.toString().length
+
+    for (i in numDigits - 1 downTo 0) {
+        var value = remainder / (10.0.pow(i)).toInt()
+        remainder = remainder % (10.0.pow(i)).toInt()
+        retList.append(value)
+    }
+
+    return retList
+}
+
 fun main() {
     var list1 = SinglyLinkedList<Int>()
     var list2 = SinglyLinkedList<Int>()
@@ -345,7 +389,7 @@ fun main() {
         println("Tail: $tail")
     }
 
-    val linkedList = addTwoLists(list1, list2)
+    val linkedList = addTwoLists2(list1, list2)
     println("After adding two lists: $linkedList")
 
 //    with(list) {
