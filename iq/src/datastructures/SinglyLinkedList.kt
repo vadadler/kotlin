@@ -126,6 +126,10 @@ class SinglyLinkedList<T: Any> {
         return null
     }
 
+    fun getAtPosRecursive(pos: Int): Node<Int>? {
+        
+    }
+
     // If size is known.
     fun getNthFromTail(pos: Int):Node<Int>? {
         return getAtPos(size - pos + 1)
@@ -315,6 +319,37 @@ class SinglyLinkedList<T: Any> {
 
         return isPalindrome
     }
+
+    // In a circular linked list find node at the beginning of the loop.
+
+    // Assume there is tail.
+    fun circularNode(): Node<Int>? {
+        var node = head
+        for (i in 0..size - 1) {
+            if (node?.value == tail?.next?.value) {
+                return node
+            }
+
+            node = node?.next
+        }
+
+        return null
+    }
+
+    // Assume there is no tail.
+    fun circularNodeNoTail(): Node<Int>? {
+        var node = head
+        for (i in 0..size - 1) {
+            if (node?.value == tail?.next?.value) {
+                return node
+            }
+
+            node = node?.next
+        }
+
+        return null
+    }
+
 }
 
 // Lists are the same length.
@@ -397,18 +432,28 @@ fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Si
 fun main() {
     var sll = SinglyLinkedList<Int>()
     with(sll) {
-//        push(3)
+        push(5)
+        push(4)
+        push(3)
         push(2)
         push(1)
-        append(2)
-        append(1)
 
-        println(this)
-        println("Head: $head")
-        println("Tail: $tail")
-
-        println("Is list $this palindroime? ${isPalindrome()}")
+        tail?.next = getAt(3)
     }
+
+    println("Start of the loop ${sll.circularNode()}")
+//        push(3)
+//        push(2)
+//        push(1)
+//        append(2)
+//        append(1)
+//
+//        println(this)
+//        println("Head: $head")
+//        println("Tail: $tail")
+//
+//        println("Is list $this palindroime? ${isPalindrome()}")
+//    }
 
 
 //    var list1 = SinglyLinkedList<Int>()
