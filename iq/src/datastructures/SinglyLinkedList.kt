@@ -126,8 +126,10 @@ class SinglyLinkedList<T: Any> {
         return null
     }
 
-    fun getAtPosRecursive(pos: Int): Node<Int>? {
-        
+    fun getAtPosRecursive(node: Node<Int>, pos: Int, currentPos: Int): Node<Int>? {
+        if (node == null) return null
+        if (pos == currentPos) return node
+        return getAtPosRecursive(node.next!!, pos, currentPos + 1)
     }
 
     // If size is known.
@@ -437,11 +439,15 @@ fun main() {
         push(3)
         push(2)
         push(1)
-
-        tail?.next = getAt(3)
+//        tail?.next = getAt(3)
     }
 
-    println("Start of the loop ${sll.circularNode()}")
+    println(sll)
+    val pos = 3
+    println("Node at position $pos is ${sll.getAtPosRecursive(sll.head!!, pos, 1)}")
+
+
+//    println("Start of the loop ${sll.circularNode()}")
 //        push(3)
 //        push(2)
 //        push(1)
