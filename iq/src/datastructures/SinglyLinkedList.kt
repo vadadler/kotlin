@@ -431,21 +431,36 @@ fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Si
     return retList
 }
 
-fun main() {
-    var sll = SinglyLinkedList<Int>()
-    with(sll) {
-        push(5)
-        push(4)
-        push(3)
-        push(2)
-        push(1)
-//        tail?.next = getAt(3)
+fun addDigits(num: Int): Int {
+    val chNum = num.toString().toCharArray()
+
+    if (chNum.size == 1) return chNum[0].digitToInt()
+
+    var sum = 0
+    for(i in 0..chNum.size - 1) {
+        sum += chNum[i].digitToInt()
     }
 
-    println(sll)
-    val pos = 3
-    println("Node at position $pos is ${sll.getAtPosRecursive(sll.head!!, pos, 1)}")
+    return addDigits(sum)
+}
 
+fun main() {
+    val digit = 38
+    print("addDigits()=${addDigits(digit)}")
+
+//    var sll = SinglyLinkedList<Int>()
+//    with(sll) {
+//        push(5)
+//        push(4)
+//        push(3)
+//        push(2)
+//        push(1)
+////        tail?.next = getAt(3)
+//    }
+//
+//    println(sll)
+//    val pos = 3
+//    println("Node at position $pos is ${sll.getAtPosRecursive(sll.head!!, pos, 1)}")
 
 //    println("Start of the loop ${sll.circularNode()}")
 //        push(3)
@@ -544,5 +559,4 @@ fun main() {
 ////        println("Head: $head")
 ////        println("Tail: $tail")
 //    }
-
 }
