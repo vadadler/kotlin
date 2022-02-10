@@ -101,6 +101,17 @@ class DoublyLinkedList {
             return getAtRecursively(pos, currPos + 1, currNode?.next)
         }
     }
+
+    fun getNthFromTail(pos: Int): Node<Int>? {
+        var node = tail
+        for (i in 1..pos) {
+            if (i == pos) return node
+
+            node = node?.prev
+        }
+
+        return null
+    }
  }
 
 fun main() {
@@ -114,8 +125,9 @@ fun main() {
     }
 
     println(dll)
-    val pos = 3
+    val pos = 2
     println("getAt($pos)=${dll.getAt(pos)}")
     println("getAtRecursively($pos)=${dll.getAtRecursively(pos, 1, dll.head)}")
+    println("getNthFromTail($pos)=${dll.getNthFromTail(pos)}")
 
 }
