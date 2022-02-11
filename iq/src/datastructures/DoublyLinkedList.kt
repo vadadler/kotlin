@@ -169,6 +169,43 @@ class DoublyLinkedList {
 
         return isPalindrome(left?.next, right?.prev)
     }
+
+    fun deDup() {
+        var node = head
+        var len = size
+        for (i in 1..len) {
+            var curr = node?.next
+            for (j in 1..len - 1) {
+                if (node?.value == curr?.value) {
+                    if (curr == tail) {
+                        tail = curr?.prev
+                    }
+                    curr?.prev?.next = curr?.next
+                    curr?.next?.prev = curr?.prev
+                    size --
+                    len--
+                }
+                curr = curr?.next
+            }
+            node = node?.next
+        }
+    }
+
+    fun deDupRecursive(node: Node<Int>?) {
+        if (node == null) return
+
+        var curr = node?.next
+        for (i in 1..size) {
+            if (node.value == curr?.value) {
+                if (curr == tail) tail = curr?.prev
+                curr?.prev?.next = curr?.next
+                curr?.next?.prev = curr?.prev
+                size--
+            }
+            curr = curr?.next
+        }
+        deDupRecursive(node?.next)
+    }
  }
 
 fun main() {
@@ -192,6 +229,9 @@ fun main() {
 //    println("insertAt($pos, $value)=$dll")
 //    dll.deleteAt(pos)
 //    println("After deleteAt($pos):$dll")
-    println("isPalindrome()=${dll.isPalindrome(dll.head, dll.tail)}")
-
+//    println("isPalindrome()=${dll.isPalindrome(dll.head, dll.tail)}")
+    dll.deDupRecursive(dll.head)
+    println("After deDupRecursive()=$dll")
+    println("Head: ${dll.head}")
+    println("Tail: ${dll.tail}")
 }
