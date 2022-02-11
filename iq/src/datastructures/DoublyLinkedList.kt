@@ -93,13 +93,13 @@ class DoublyLinkedList {
     fun getAtRecursively(pos: Int, currPos: Int, currNode: Node<Int>?): Node<Int>? {
         if (currNode == null) return null
 
-        if (pos == 1) return head
-        else if (pos == size) return tail
-        else if (pos <= 0 || pos > size) return null
-        else if (pos == currPos) return currNode
-        else {
-            return getAtRecursively(pos, currPos + 1, currNode?.next)
-        }
+        return if (pos == 1) head
+            else if (pos == size) tail
+            else if (pos <= 0 || pos > size) null
+            else if (pos == currPos) currNode
+            else {
+                getAtRecursively(pos, currPos + 1, currNode?.next)
+            }
     }
 
     fun getNthFromTail(pos: Int): Node<Int>? {
@@ -111,6 +111,36 @@ class DoublyLinkedList {
         }
 
         return null
+    }
+
+    fun insertAt(pos: Int, value: Int) {
+        var node = Node(value, null, null)
+        var curr = head
+
+        if (pos == 1) push(value)
+        else if (pos == size) append(value)
+        else if (pos <= size/2) { // start from head.
+            for (i in 1..size/2) {
+                if (i == pos) break
+                curr = curr?.next
+            }
+        } else {            // start from tail.
+            curr = tail
+            for (i in 0..size/2) {
+                if (i == pos) break
+                curr = curr?.prev
+            }
+        }
+
+        node.prev = curr?.prev
+        node.next = curr
+        node.prev?.next = node
+        curr?.prev = node
+        size++
+    }
+
+    fun deleteAt(pos: Int, value: Int) {
+
     }
  }
 
@@ -126,8 +156,11 @@ fun main() {
 
     println(dll)
     val pos = 2
+    val value = 6
     println("getAt($pos)=${dll.getAt(pos)}")
     println("getAtRecursively($pos)=${dll.getAtRecursively(pos, 1, dll.head)}")
     println("getNthFromTail($pos)=${dll.getNthFromTail(pos)}")
+    dll.insertAt(pos, value)
+    println("insertAt($pos, $value)=$dll")
 
 }
