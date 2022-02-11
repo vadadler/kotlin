@@ -127,7 +127,7 @@ class DoublyLinkedList {
         } else {            // start from tail.
             curr = tail
             for (i in 0..size/2) {
-                if (i == pos) break
+                if (i == size - pos - 1) break
                 curr = curr?.prev
             }
         }
@@ -139,8 +139,27 @@ class DoublyLinkedList {
         size++
     }
 
-    fun deleteAt(pos: Int, value: Int) {
+    fun deleteAt(pos: Int) {
+        if (pos <= 0 && pos > size) return
 
+        var curr = head
+
+        if (pos == 1) {
+            head?.next?.prev = null
+            head = head?.next
+        } else if (pos == size) {
+            tail?.prev?.next = null
+            tail = tail?.prev
+        } else {
+            for (i in 1..size) {
+                if (i == pos) {
+                    curr?.prev?.next = curr?.next
+                    curr?.next?.prev = curr?.prev
+                }
+                curr = curr?.next
+            }
+        }
+        size--
     }
  }
 
@@ -155,12 +174,15 @@ fun main() {
     }
 
     println(dll)
-    val pos = 2
+    val pos = 4
     val value = 6
     println("getAt($pos)=${dll.getAt(pos)}")
     println("getAtRecursively($pos)=${dll.getAtRecursively(pos, 1, dll.head)}")
     println("getNthFromTail($pos)=${dll.getNthFromTail(pos)}")
+    println("Before insert: ${dll}")
     dll.insertAt(pos, value)
     println("insertAt($pos, $value)=$dll")
+    dll.deleteAt(pos)
+    println("After deleteAt($pos):$dll")
 
 }
