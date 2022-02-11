@@ -161,6 +161,14 @@ class DoublyLinkedList {
         }
         size--
     }
+
+    fun isPalindrome(left: Node<Int>?, right: Node<Int>?): Boolean {
+        if (left?.value != right?.value) return false
+        if (left == null || right == null) return false
+        if (left == right || left?.next == right?.prev) return true
+
+        return isPalindrome(left?.next, right?.prev)
+    }
  }
 
 fun main() {
@@ -169,20 +177,21 @@ fun main() {
         append(2)
         push(1)
         append(3)
-        append(4)
-        append(5)
+        append(2)
+        append(1)
     }
 
     println(dll)
-    val pos = 4
-    val value = 6
-    println("getAt($pos)=${dll.getAt(pos)}")
-    println("getAtRecursively($pos)=${dll.getAtRecursively(pos, 1, dll.head)}")
-    println("getNthFromTail($pos)=${dll.getNthFromTail(pos)}")
-    println("Before insert: ${dll}")
-    dll.insertAt(pos, value)
-    println("insertAt($pos, $value)=$dll")
-    dll.deleteAt(pos)
-    println("After deleteAt($pos):$dll")
+//    val pos = 4
+//    val value = 6
+//    println("getAt($pos)=${dll.getAt(pos)}")
+//    println("getAtRecursively($pos)=${dll.getAtRecursively(pos, 1, dll.head)}")
+//    println("getNthFromTail($pos)=${dll.getNthFromTail(pos)}")
+//    println("Before insert: ${dll}")
+//    dll.insertAt(pos, value)
+//    println("insertAt($pos, $value)=$dll")
+//    dll.deleteAt(pos)
+//    println("After deleteAt($pos):$dll")
+    println("isPalindrome()=${dll.isPalindrome(dll.head, dll.tail)}")
 
 }
