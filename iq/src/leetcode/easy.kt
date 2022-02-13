@@ -20,11 +20,10 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
  */
 
 fun twoSum(inputArray: IntArray, target: Int): IntArray? {
-    val list = inputArray.toList()
-    for (e1 in list) {
-        for (e2 in list.subList(inputArray.indexOf(e1) + 1, inputArray.size)) {
-            if (e1 + e2 == target) {
-                return intArrayOf(inputArray.indexOf(e1), inputArray.indexOf(e2))
+    for (i in 0..inputArray.size - 1) {
+        for (j in i + 1..inputArray.size - 1) {
+            if (inputArray[i] + inputArray[j] == target) {
+                return intArrayOf(i, j)
             }
         }
     }
@@ -34,7 +33,7 @@ fun twoSum(inputArray: IntArray, target: Int): IntArray? {
 fun twoSumRecursive(inputArray: IntArray, i: Int, target: Int): IntArray? {
     if (i >= inputArray.size) return null
 
-    for (j in i + 1..inputArray.size) {
+    for (j in i + 1..inputArray.size - 1) {
         if (inputArray[i] + inputArray[j] == target) return intArrayOf(i,j)
     }
 
