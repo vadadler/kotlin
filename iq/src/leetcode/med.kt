@@ -1,32 +1,25 @@
 package leetcode
 
+import kotlin.math.pow
+
 // Medium LeetCode problems.
 
 fun main() {
     var l1 = SinglyLinkedList()
     with (l1) {
-        push(9)
-        push(9)
-        push(9)
-        push(9)
-        push(9)
-        push(9)
-        push(9)
-//        push(4)
-//        push(2)
+        push(3)
+        push(4)
+        push(2)
     }
 
     var l2 = SinglyLinkedList()
     with (l2) {
-        push(9)
-        push(9)
-        push(9)
-        push(9)
-//        push(6)
-//        push(5)
+        push(4)
+        push(6)
+        push(5)
     }
 
-    println(addTwoNumbers(l1, l2))
+    println(addTwoNumbers2(l1, l2))
 }
 
 /*
@@ -179,6 +172,29 @@ fun addTwoNumbers(l1: SinglyLinkedList?, l2: SinglyLinkedList?): SinglyLinkedLis
     return null
 }
 
-fun addTwoNumbers2(l1: SinglyLinkedList?, l2: SinglyLinkedList?): SinglyLinkedList? {
+fun addTwoNumbers2(l1: SinglyLinkedList, l2: SinglyLinkedList): SinglyLinkedList? {
+    var node = l1.head
+    var n1 = 0
+    for (i in 0..l1.size - 1) {
+        n1 += node?.value!! * 10.0.pow(i).toInt()
+        node = node?.next
+    }
 
+    node = l2.head
+    var n2 = 0
+    for (i in 0..l2.size - 1) {
+        n1 += node?.value!! * 10.0.pow(i).toInt()
+        node = node?.next
+    }
+
+    var sum = n1 + n2
+
+    var l = sum.toString().length
+    var num = 0
+    var retList = SinglyLinkedList()
+    for (i in l - 1 downTo 0) {
+        retList.push((sum % 10.0.pow(i + 1).toInt()) / 10.0.pow(i).toInt())
+    }
+
+    return retList
 }
