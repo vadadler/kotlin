@@ -12,14 +12,21 @@ fun main() {
         push(2)
     }
 
+//    println(l1)
     var l2 = SinglyLinkedList()
     with (l2) {
         push(4)
         push(6)
         push(5)
+        push(3)
     }
 
     println(addTwoNumbers2(l1, l2))
+
+    val h = addTwoNumbers3(l1.head, l2.head, 0)
+    var list = SinglyLinkedList()
+    list.head = h
+
 }
 
 /*
@@ -96,8 +103,8 @@ class SinglyLinkedList {
         var ret = StringBuilder()
         var node = head
 
-        for (i in 1..size) {
-            if (i == size) {
+        while (node != null) {
+            if (node.next == null) {
                 ret.append(node?.value)
             } else {
                 ret.append("${node?.value}-->")
@@ -109,15 +116,10 @@ class SinglyLinkedList {
     }
 
     fun push(value: Int) {
-        var node = Node(value, null)
-        if (size == 0) {
-            head = node
+        head = Node(value, head)
+        if (tail == null) {
             tail = head
-        } else {
-            node.next = head
-            head = node
         }
-
         size++
     }
 }
@@ -197,4 +199,28 @@ fun addTwoNumbers2(l1: SinglyLinkedList, l2: SinglyLinkedList): SinglyLinkedList
     }
 
     return retList
+}
+
+fun addTwoNumbers3(n1: SinglyLinkedList.Node?, n2: SinglyLinkedList.Node?, extra: Int): SinglyLinkedList.Node? {
+    if (n1 == null && n2 == null) return null
+
+    var sum1 = 0
+    var sum2 = 0
+    if (n1 != null) {
+        sum1 = n1.value
+    }
+
+    if (n2 != null) {
+        sum2 = n2.value
+    }
+    var sum = sum1 + sum2 + extra
+    val value = sum % 10
+    var more = 0
+    if (sum >= 10) more = 1
+
+    var result = SinglyLinkedList.Node(value, null)
+
+    result?.next = addTwoNumbers3(n1?.next, n2?.next, more)
+
+    return result
 }
