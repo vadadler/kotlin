@@ -7,9 +7,10 @@ import kotlin.math.pow
 fun main() {
     var l1 = SinglyLinkedList()
     with (l1) {
-        push(3)
+        push(5)
         push(4)
         push(2)
+        println(this)
     }
 
 //    println(l1)
@@ -19,6 +20,7 @@ fun main() {
         push(6)
         push(5)
         push(3)
+        println(this)
     }
 
     println(addTwoNumbers2(l1, l2))
