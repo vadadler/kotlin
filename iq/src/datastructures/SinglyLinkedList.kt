@@ -436,10 +436,10 @@ fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Si
 }
 
 // Lists are the same length.
-// Two numbers represented as SLL where each node contains single digit.
+// Two numbers represented as SLL where each node contains single digit. The digits are stored in reverse order.
 // Example:
-// Input: (7->1->6) + (5->9->2) That is 716+295
-// Output: 1->3->0->8 That is, 1308
+// Input: (7->1->6) + (5->9->2) That is 617+295
+// Output: 2->1->9 That is, 912
 fun addTwoLists3(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>?, more: Int): SinglyLinkedList.Node<Int>? {
     if (n1 == null && n2 == null) {
         if (more != 0) {
@@ -474,6 +474,35 @@ fun addTwoLists3(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>
     return result
 }
 
+// Lists are the same length.
+// Two numbers represented as SLL where each node contains single digit.
+// Example:
+// Input: (7->1->6) + (5->9->2) That is 716+295
+// Output: 1->3->0->8 That is, 1308
+fun addTwoLists4(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>?, prevNode: SinglyLinkedList.Node<Int>?): SinglyLinkedList.Node<Int>? {
+    if (n1 == null && n2 == null) return null
+
+    var sum1 = 0
+    var sum2 = 0
+    if (n1 != null) {
+        sum1 = n1.value
+    }
+
+    if (n2 != null) {
+        sum2 = n2.value
+    }
+    var sum = sum1 + sum2
+    val value = sum % 10
+    var more = 0
+    if (sum >= 10) prevNode?.value = prevNode?.value?.plus(1)!!
+
+    var result = SinglyLinkedList.Node(value, null)
+
+    result?.next = addTwoLists4(n1?.next, n2?.next, result)
+
+    return result
+}
+
 fun addDigits(num: Int): Int {
     val chNum = num.toString().toCharArray()
 
@@ -488,38 +517,6 @@ fun addDigits(num: Int): Int {
 }
 
 fun main() {
-//    val digit = 38
-//    print("addDigits()=${addDigits(digit)}")
-
-//    var sll = SinglyLinkedList<Int>()
-//    with(sll) {
-//        push(5)
-//        push(4)
-//        push(3)
-//        push(2)
-//        push(1)
-////        tail?.next = getAt(3)
-//    }
-//
-//    println(sll)
-//    val pos = 3
-//    println("Node at position $pos is ${sll.getAtPosRecursive(sll.head!!, pos, 1)}")
-
-//    println("Start of the loop ${sll.circularNode()}")
-//        push(3)
-//        push(2)
-//        push(1)
-//        append(2)
-//        append(1)
-//
-//        println(this)
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//        println("Is list $this palindroime? ${isPalindrome()}")
-//    }
-
-
     var list1 = SinglyLinkedList<Int>()
     var list2 = SinglyLinkedList<Int>()
 
@@ -529,9 +526,6 @@ fun main() {
         push(7)
 
         println(this)
-//        println("Head: $head")
-//        println("Tail: $tail")
-
     }
 
     with(list2) {
@@ -543,62 +537,14 @@ fun main() {
     }
 
     var sll = SinglyLinkedList<Int>()
-    sll.head = addTwoLists3(list1.head, list2.head, 0)
+    var prevNode = SinglyLinkedList.Node<Int>(0, null)
+    var n = addTwoLists4(list1.head, list2.head, prevNode)
+    if (prevNode?.value != 0) {
+        sll.head = prevNode
+        sll.head?.next = n
+    } else {
+        sll.head = n
+    }
+
     println(sll)
-//    with(list) {
-//        push(2)
-//        push(1)
-//        push(3)
-//        push(5)
-//        push(4)
-//        append(5)
-//        append(4)
-//
-//        println(list)
-//        println("Head: $head")
-//        println("Tail: $tail")
-////
-////        insertAt(0, 5)
-////        println("After insert: $list")
-////        println("Head: $head")
-////        println("Tail: $tail")
-////
-////        deleteAt(1)
-////        println("After delete: $list")
-////        println("Head: $head")
-////        println("Tail: $tail")
-//
-//        deDup2()
-//        println("After deDup: $list")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//
-//        val pos = 3
-//        var node = getNthFromTail(pos)
-//        println("getNthFromTail($pos): $node")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//        node = getNthFromTailNoSize(pos)
-//        println("getNthFromTailNoSize($pos): $node")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//        node = getNthFromTailNoSizeRecursive(pos)
-//        println("getNthFromTailNoSizeRecursive($pos): $node")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-//        val value = 3
-//        partitionListAroundValue(value)
-//        println("After partitionListAroundValue($value): $list")
-//        println("Head: $head")
-//        println("Tail: $tail")
-//
-////        deleteNthNode(3)
-////        println("After delete: $list")
-////        println("Head: $head")
-////        println("Tail: $tail")
-//    }
 }
