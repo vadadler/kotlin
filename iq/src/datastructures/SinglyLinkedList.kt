@@ -34,13 +34,17 @@ class SinglyLinkedList<T: Any> {
         return size == 0
     }
 
-    override fun toString():String {
+    override fun toString(): String {
         var ret = StringBuilder()
         var node = head
-        ret.append(node.toString())
-        while (node?.next != null) {
-            ret.append("-->${node?.next.toString()}")
-            node = node?.next
+
+        while (node != null) {
+            if (node.next == null) {
+                print(node.value)
+            } else {
+                print("${node.value}-->")
+            }
+            node = node.next
         }
 
         return ret.toString()
@@ -431,6 +435,45 @@ fun addTwoLists2(list1: SinglyLinkedList<Int>, list2: SinglyLinkedList<Int>): Si
     return retList
 }
 
+// Lists are the same length.
+// Two numbers represented as SLL where each node contains single digit.
+// Example:
+// Input: (7->1->6) + (5->9->2) That is 716+295
+// Output: 1->3->0->8 That is, 1308
+fun addTwoLists3(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>?, more: Int): SinglyLinkedList.Node<Int>? {
+    if (n1 == null && n2 == null) {
+        if (more != 0) {
+          return SinglyLinkedList.Node(more, null)
+        } else return null
+    }
+
+    var sum1 = 0
+    var sum2 = 0
+    var sum = 0
+    var more = 0
+
+    if (n1 != null) {
+        sum1 = n1.value
+    }
+
+    if (n2 != null) {
+        sum2 = n2.value
+    }
+
+    sum = sum1 + sum2
+
+    if (sum >= 10) {
+        more = 1
+        sum = sum % 10
+    }
+
+    var result = SinglyLinkedList.Node(sum, null)
+
+    result.next = addTwoLists3(n1?.next, n2?.next, more)
+
+    return result
+}
+
 fun addDigits(num: Int): Int {
     val chNum = num.toString().toCharArray()
 
@@ -445,8 +488,8 @@ fun addDigits(num: Int): Int {
 }
 
 fun main() {
-    val digit = 38
-    print("addDigits()=${addDigits(digit)}")
+//    val digit = 38
+//    print("addDigits()=${addDigits(digit)}")
 
 //    var sll = SinglyLinkedList<Int>()
 //    with(sll) {
@@ -477,32 +520,31 @@ fun main() {
 //    }
 
 
-//    var list1 = SinglyLinkedList<Int>()
-//    var list2 = SinglyLinkedList<Int>()
-//
-//    with(list1) {
-//        push(6)
-//        push(1)
-//        push(7)
-//
-//        println(this)
+    var list1 = SinglyLinkedList<Int>()
+    var list2 = SinglyLinkedList<Int>()
+
+    with(list1) {
+        push(6)
+        push(1)
+        push(7)
+
+        println(this)
 //        println("Head: $head")
 //        println("Tail: $tail")
-//
-//    }
-//
-//    with(list2) {
-//        push(2)
-//        push(9)
-//        push(5)
-//
-//        println(this)
-//        println("Head: $head")
-//        println("Tail: $tail")
-//    }
-//
-//    val linkedList = addTwoLists2(list1, list2)
-//    println("After adding two lists: $linkedList")
+
+    }
+
+    with(list2) {
+        push(2)
+        push(9)
+        push(5)
+
+        println(this)
+    }
+
+    var sll = SinglyLinkedList<Int>()
+    sll.head = addTwoLists3(list1.head, list2.head, 0)
+    println(sll)
 //    with(list) {
 //        push(2)
 //        push(1)
