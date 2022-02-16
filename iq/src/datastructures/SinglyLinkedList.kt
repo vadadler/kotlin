@@ -535,11 +535,13 @@ fun addTwoLists5(l1: SinglyLinkedList<Int>, l2: SinglyLinkedList<Int>):SinglyLin
     var prevNode = SinglyLinkedList.Node(0, null)
     var node = addTwoLists4(l1.head, l2.head, prevNode)
 
-    if (prevNode.value == 1) {
-
-    } else {
-        
+    if (node?.value!! >= 10) {
+        var tempNode = SinglyLinkedList.Node(1, node)
+        node?.value = node?.value!! % 10
+        tempNode.next = node
+        return tempNode
     }
+
     return node
 }
 
