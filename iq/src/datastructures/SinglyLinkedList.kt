@@ -1,5 +1,7 @@
 package datastructures
 
+import leetcode.addTwoNumbers3
+import java.lang.Math.abs
 import kotlin.math.pow
 
 /*
@@ -477,7 +479,7 @@ fun addTwoLists3(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>
 // Lists are the same length.
 // Two numbers represented as SLL where each node contains single digit.
 // Example:
-// Input: (7->1->6) + (5->9->2) That is 716+295
+// Input: (7->1->6) + (5->9->2) That is 716+592
 // Output: 1->3->0->8 That is, 1308
 fun addTwoLists4(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>?, prevNode: SinglyLinkedList.Node<Int>?): SinglyLinkedList.Node<Int>? {
     if (n1 == null && n2 == null) return null
@@ -503,6 +505,44 @@ fun addTwoLists4(n1: SinglyLinkedList.Node<Int>?, n2: SinglyLinkedList.Node<Int>
     return result
 }
 
+// Lists are not the same length.
+// Two numbers represented as SLL where each node contains single digit.
+// Example:
+// Input: (7->1->6) + (8->5->9->2) That is 716+8292
+// Output: 8->7->0->8 That is, 1308
+fun addTwoLists5(l1: SinglyLinkedList<Int>, l2: SinglyLinkedList<Int>):SinglyLinkedList.Node<Int>? {
+    // Prepad shorter list with 0 nodes.
+    val numZeros = l1.size - l2.size
+    if (numZeros != 0) {
+        var tempList = SinglyLinkedList<Int>()
+        if (numZeros > 0) { // l1 is lengthier then l2
+            tempList = l2
+        } else {
+            tempList = l1
+        }
+
+        for (i in 1..abs(numZeros)) {
+            var tempNode = SinglyLinkedList.Node<Int>(0, null)
+            tempNode.next = tempList.head
+            tempList.head = tempNode
+            tempList.size++
+        }
+    }
+
+    println(l1)
+    println(l2)
+
+    var prevNode = SinglyLinkedList.Node(0, null)
+    var node = addTwoLists4(l1.head, l2.head, prevNode)
+
+    if (prevNode.value == 1) {
+
+    } else {
+        
+    }
+    return node
+}
+
 fun addDigits(num: Int): Int {
     val chNum = num.toString().toCharArray()
 
@@ -521,7 +561,7 @@ fun main() {
     var list2 = SinglyLinkedList<Int>()
 
     with(list1) {
-        push(6)
+        push(7)
         push(1)
         push(7)
 
@@ -531,20 +571,23 @@ fun main() {
     with(list2) {
         push(2)
         push(9)
-        push(5)
+        push(8)
+        push(9)
 
         println(this)
     }
 
     var sll = SinglyLinkedList<Int>()
-    var prevNode = SinglyLinkedList.Node<Int>(0, null)
-    var n = addTwoLists4(list1.head, list2.head, prevNode)
-    if (prevNode?.value != 0) {
-        sll.head = prevNode
-        sll.head?.next = n
-    } else {
-        sll.head = n
-    }
+    var n = addTwoLists5(list1, list2)
+    sll.head = n
+//    var prevNode = SinglyLinkedList.Node<Int>(0, null)
+//    var n = addTwoLists4(list1.head, list2.head, prevNode)
+//    if (prevNode?.value != 0) {
+//        sll.head = prevNode
+//        sll.head?.next = n
+//    } else {
+//        sll.head = n
+//    }
 
     println(sll)
 }
