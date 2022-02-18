@@ -1,62 +1,28 @@
 package datastructures
 
-/*
- * Stacks are crucial to problems that search trees and graphs. Imagine finding your way through a maze. Each time you
- * come to a decision point of left, right or straight, you can push all possible decisions onto your stack. When you
- * hit a dead end, backtrack by popping from the stack and continuing until you escape or hit another dead end.
- */
-interface IStack<T: Any> {
-    fun push(element: T)
-    fun peek(): T?
-    fun pop(): T?
-    val size: Int
-        get() = size
-    val count: Int
-    val isEmpty: Boolean
-        get() = count == 0
+interface IStack<Int> {
+    fun push(element: Int)
+    fun pop(): Int?
+    fun isEmpty(): Boolean
+    fun size(): Int
 }
 
-class Stack<T: Any>: IStack<T> {
-    private var data =  mutableListOf<T>()
+class Stack<Int>:IStack<Int> {
 
-    override fun push(element: T) {
-        data.add(element)
+    var head: Int? = null
+    var size: Int = 0
+
+    public override fun push(value: Int) {
+
     }
 
-    override val size: Int
-        get() = data.size
-
-    override fun pop(): T? {
-        if (size == 0) return null
-        return data.removeAt(size - 1)
+    public override fun pop(): Int? {
+        return head ?: null
     }
 
-    override fun peek(): T? {
-        return data.lastOrNull()
+    public override fun isEmpty(): Boolean {
+        return size == 0
     }
 
-    override fun toString(): String {
-        return data.toString()
-    }
-
-    override val count: Int
-        get() = size
-}
-
-fun main() {
-    var s = Stack<Int>().apply {
-        push(3)
-        push(4)
-    }.also {
-        println("Stack -> ${it}")
-        println("Pop -> ${it}")
-        println("Stack -> ${it}")
-    }.also {
-        it.push(5)
-        it.push(2)
-
-        println("Stack -> ${it}")
-        println("Pop -> ${it.pop()}")
-        println("Stack -> ${it}")
-    }
+    public override fun size(): Int = size
 }

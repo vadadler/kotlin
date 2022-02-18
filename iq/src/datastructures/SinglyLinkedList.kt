@@ -358,6 +358,15 @@ class SinglyLinkedList<T: Any> {
         return null
     }
 
+    // Use two pointers: slow (1 step at a time) and fast (2 steps at a time)
+    // When two points meet, next node is the beginning of the loop.
+    fun circularNodeTwoPointers(slow: Node<Int>, fast: Node<Int>): Node<Int>? {
+        if (slow?.next == null || fast?.next?.next == null) return null
+        if (slow == fast) return slow.next
+        var node = circularNodeTwoPointers(slow?.next!!, fast?.next?.next!!)
+        return node
+    }
+
 }
 
 // Lists are the same length.
@@ -563,33 +572,16 @@ fun main() {
     var list2 = SinglyLinkedList<Int>()
 
     with(list1) {
-        push(7)
-        push(1)
-        push(7)
-
-        println(this)
-    }
-
-    with(list2) {
+        push(6)
+        push(5)
+        push(4)
+        push(3)
         push(2)
-        push(9)
-        push(8)
-        push(9)
+        push(1)
 
-        println(this)
+        tail?.next = head?.next?.next
     }
 
-    var sll = SinglyLinkedList<Int>()
-    var n = addTwoLists5(list1, list2)
-    sll.head = n
-//    var prevNode = SinglyLinkedList.Node<Int>(0, null)
-//    var n = addTwoLists4(list1.head, list2.head, prevNode)
-//    if (prevNode?.value != 0) {
-//        sll.head = prevNode
-//        sll.head?.next = n
-//    } else {
-//        sll.head = n
-//    }
-
-    println(sll)
+    val node = list1.circularNodeTwoPointers(list1?.head?.next!!, list1?.head?.next?.next!!)
+    println(node)
 }
