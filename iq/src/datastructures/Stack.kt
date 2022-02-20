@@ -16,20 +16,17 @@ class Stack<Int>:IStack<Int> {
     var size = 0
 
     public override fun push(value: Int) {
-        if (size == 0) {
-            data.add(value)
-            head = value
-        }
+        data.add(size, value)
+        head = value
         size++
     }
 
     public override fun pop(): Int? {
-        var retVal: Int? = null
-        if (head != null) {
-            retVal = head
-            data.removeAt(size)
-            size--
-        }
+        if (head == null) return null
+        val retVal =  head
+        data.removeAt(size - 1)
+        size--
+        head = data.elementAt(size - 1)
         return retVal
     }
 
@@ -40,12 +37,23 @@ class Stack<Int>:IStack<Int> {
     public override fun size(): kotlin.Int = size
 
     public override fun toString(): String {
-
+        println("---top---")
+        for (i in size - 1 downTo 0) println(data.elementAt(i))
+        println("---bottom---")
+        return ""
     }
 }
 
 fun main() {
     var st = Stack<Int>()
     st.push(1)
+    st.push(2)
+    st.push(3)
+    st.push(4)
+    st.push(5)
 
+    println(st)
+
+    println("popped ${st.pop()}")
+    println(st)
 }
