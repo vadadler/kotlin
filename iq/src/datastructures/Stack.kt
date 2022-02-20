@@ -1,59 +1,62 @@
 package datastructures
 
+import java.util.LinkedList
 import kotlin.jvm.internal.Intrinsics
 import kotlin.Int
 
 interface IStack<Int> {
     fun push(element: Int)
     fun pop(): Int?
-    fun isEmpty(): Boolean
-    fun size(): kotlin.Int
+    val isEmpty: Boolean
+    val length: kotlin.Int
+    fun peek(): Int?
 }
 
 class Stack<Int>:IStack<Int> {
     var data = arrayListOf<Int>()
-    var head: Int? = null
-    var size = 0
 
-    public override fun push(value: Int) {
-        data.add(size, value)
-        head = value
-        size++
+    override fun push(value: Int) {
+        data.add(value)
     }
 
-    public override fun pop(): Int? {
-        if (head == null) return null
-        val retVal =  head
-        data.removeAt(size - 1)
-        size--
-        head = data.elementAt(size - 1)
-        return retVal
+    override fun pop(): Int? {
+        if (isEmpty) return null
+        return data.removeAt(length - 1)
     }
 
-    public override fun isEmpty(): Boolean {
-        return size == 0
+    override val isEmpty = data.size == 0
+
+    override fun peek(): Int? {
+        return data.lastOrNull()
     }
 
-    public override fun size(): kotlin.Int = size
+    override val length = data.size
 
-    public override fun toString(): String {
-        println("---top---")
-        for (i in size - 1 downTo 0) println(data.elementAt(i))
-        println("---bottom---")
-        return ""
+    override fun toString() = buildString {
+        appendLine("---top---")
+        data.asReversed().forEach{
+            appendLine("$it")
+        }
+        appendLine("---bottom---")
     }
 }
 
+fun reverseLinkedList(ll: LinkedList<Int>): LinkedList<Int>? {
+    return null
+}
+
 fun main() {
-    var st = Stack<Int>()
-    st.push(1)
-    st.push(2)
-    st.push(3)
-    st.push(4)
-    st.push(5)
+    var ll = LinkedList<Int>()
+    with (ll) {
+        add(1)
+        add(2)
+        add(3)
+        add(4)
+        add(5)
 
-    println(st)
+        println(this)
 
-    println("popped ${st.pop()}")
-    println(st)
+        
+    }
+
 }
