@@ -39,13 +39,38 @@ class Stack<Int>:IStack<Int> {
         }
         appendLine("---bottom---")
     }
+
+    // Create static factory method to create Stack.
+    // To simulate static behavior, use companion object.
+    companion object {
+        fun create(items: Iterable<Int>): Stack<Int> {
+            val stack = Stack<Int>()
+            for (item in items) {
+                stack.push(item)
+            }
+            return stack
+        }
+    }
 }
 
 fun reverseLinkedList(ll: LinkedList<Int>): LinkedList<Int>? {
+    val st = Stack.create(ll)
+    var retList = LnkedList
+
     return null
 }
 
 fun main() {
+    val st = Stack<Int>().apply {
+        push(1)
+        push(2)
+        push(3)
+        push(4)
+        push(5)
+    }
+
+    print(st)
+
     var ll = LinkedList<Int>()
     with (ll) {
         add(1)
@@ -55,8 +80,9 @@ fun main() {
         add(5)
 
         println(this)
+    }
 
-        
+
     }
 
 }
