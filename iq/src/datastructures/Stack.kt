@@ -24,13 +24,15 @@ class Stack<Int>:IStack<Int> {
         return data.removeAt(length - 1)
     }
 
-    override val isEmpty = data.size == 0
+    override val isEmpty: Boolean
+        get() = data.size == 0
 
     override fun peek(): Int? {
         return data.lastOrNull()
     }
 
-    override val length = data.size
+    override val length: kotlin.Int
+        get() = data.size
 
     override fun toString() = buildString {
         appendLine("---top---")
@@ -55,21 +57,27 @@ class Stack<Int>:IStack<Int> {
 
 fun reverseLinkedList(ll: LinkedList<Int>): LinkedList<Int>? {
     val st = Stack.create(ll)
-    var retList = LnkedList
+    var retList = LinkedList<Int>()
 
-    return null
+    var node = st.pop()
+    while(node != null) {
+        retList.add(node)
+        node = st.pop()
+    }
+
+    return retList
 }
 
 fun main() {
-    val st = Stack<Int>().apply {
-        push(1)
-        push(2)
-        push(3)
-        push(4)
-        push(5)
-    }
-
-    print(st)
+//    val st = Stack<Int>().apply {
+//        push(1)
+//        push(2)
+//        push(3)
+//        push(4)
+//        push(5)
+//    }
+//
+//    print(st)
 
     var ll = LinkedList<Int>()
     with (ll) {
@@ -82,7 +90,5 @@ fun main() {
         println(this)
     }
 
-
-    }
-
+    println(reverseLinkedList(ll))
 }
