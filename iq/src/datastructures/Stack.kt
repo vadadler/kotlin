@@ -3,6 +3,7 @@ package datastructures
 import java.util.LinkedList
 import kotlin.jvm.internal.Intrinsics
 import kotlin.Int
+import kotlin.test.assertFalse
 
 interface IStack<Int> {
     fun push(element: Int)
@@ -55,6 +56,8 @@ class Stack<Int>:IStack<Int> {
     }
 }
 
+// Reverse a LinkedList.
+// Given a linked list, print the nodes in reverse order. You should not use recursion to solve this problem.
 fun reverseLinkedList(ll: LinkedList<Int>): LinkedList<Int>? {
     val st = Stack.create(ll)
     var retList = LinkedList<Int>()
@@ -66,6 +69,29 @@ fun reverseLinkedList(ll: LinkedList<Int>): LinkedList<Int>? {
     }
 
     return retList
+}
+
+// The parentheses validation
+// Check for balanced parentheses. Given a string, check if there are ( and ) characters, and return true if the
+// parentheses in the string are balanced.
+// Solution: walk input string char by char. If found ( push to stack, if found ) pop the stack. At the end if
+// stack is empty parantheses are balanced. Otherwise, they are not.
+//
+// h((e))llo(world)() // balanced parentheses
+// (hello world // unbalanced parentheses
+fun isBalanceParentheses(input: String): Boolean {
+    var st = Stack<Int>()
+
+    for (ch in input) {
+        if (ch == '(') {
+            st.push(1)
+        }
+        else if (ch ==')')  {
+            if (!st.isEmpty) st.pop()
+            else return false
+        }
+    }
+    return st.isEmpty
 }
 
 fun main() {
@@ -91,4 +117,7 @@ fun main() {
     }
 
     println(reverseLinkedList(ll))
+
+    val str = "(he(llo)"
+    println("Is () balanced in $str: ${isBalanceParentheses(str)}")
 }
