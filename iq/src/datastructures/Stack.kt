@@ -11,8 +11,18 @@ interface IStack<Int> {
     val isEmpty: Boolean
     val length: kotlin.Int
     fun peek(): Int?
-    fun min(): kotlin.Int
 }
+
+interface IStack2<Int> {
+    fun push(element: kotlin.Int)
+    fun pop(): Int?
+    val isEmpty: Boolean
+    val length: Int
+    fun peek(): Int?
+    fun min(): Int
+}
+
+data class StackValue(var value: Int, var min: Int)
 
 class Stack<Int>:IStack<Int> {
     var data = arrayListOf<Int>()
@@ -31,14 +41,6 @@ class Stack<Int>:IStack<Int> {
 
     override fun peek(): Int? {
         return data.lastOrNull()
-    }
-
-    // Return min element of the stack. Complexity is O(1).
-    // When push() check if less than current min. If yes, store
-    // index of new top.
-    // What to do with pop()? When min element is popped?
-    override fun min(): kotlin.Int {
-
     }
 
     override val length: kotlin.Int
@@ -63,6 +65,38 @@ class Stack<Int>:IStack<Int> {
             return stack
         }
     }
+}
+
+class Stack2<Int>:IStack2<Int> {
+    var data = arrayListOf<StackValue>()
+
+    override fun push(element: kotlin.Int) {
+        var e = StackValue(element, 0)
+        if (data.size == 0) {
+            e.min = element
+            data.add(e)
+        }
+    }
+
+    override fun pop(): Int? {
+        TODO("Not yet implemented")
+    }
+
+    override val isEmpty: Boolean
+        get() = TODO("Not yet implemented")
+
+    override val length: Int
+        get() = TODO("Not yet implemented")
+
+    override fun peek(): Int? {
+        TODO("Not yet implemented")
+    }
+
+    override fun min(): Int {
+        TODO("Not yet implemented")
+    }
+
+
 }
 
 // Reverse a LinkedList.
