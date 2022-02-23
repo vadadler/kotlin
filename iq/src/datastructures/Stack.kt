@@ -11,6 +11,7 @@ interface IStack<Int> {
     val isEmpty: Boolean
     val length: kotlin.Int
     fun peek(): Int?
+    fun min(): kotlin.Int
 }
 
 class Stack<Int>:IStack<Int> {
@@ -30,6 +31,14 @@ class Stack<Int>:IStack<Int> {
 
     override fun peek(): Int? {
         return data.lastOrNull()
+    }
+
+    // Return min element of the stack. Complexity is O(1).
+    // When push() check if less than current min. If yes, store
+    // index of new top.
+    // What to do with pop()? When min element is popped?
+    override fun min(): kotlin.Int {
+
     }
 
     override val length: kotlin.Int
@@ -92,6 +101,31 @@ fun isBalanceParentheses(input: String): Boolean {
         }
     }
     return st.isEmpty
+}
+
+// Implement 3 stacks using one array.
+// Divide array in 3 parts. Use each part as storage for one stack.
+fun oneArray3Stacks(array: IntArray) {
+    class Stack<Int>(len: kotlin.Int) {
+        val data = IntArray(len)
+        var top: kotlin.Int = 0
+        val isEmpty: Boolean
+            get() = top == 0
+
+        fun push(v: kotlin.Int) {
+            if (top == data.size) throw ArrayIndexOutOfBoundsException()
+            data[top] = v
+            top++
+        }
+
+        fun pop() {
+            var retVal: kotlin.Int
+            if (!isEmpty) {
+                retVal = data.elementAt(top)
+                top--
+            }
+        }
+    }
 }
 
 fun main() {
