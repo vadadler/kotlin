@@ -212,12 +212,27 @@ fun main() {
 //    println("Is () balanced in $str: ${isBalanceParentheses(str)}")
 
     var st = Stack2()
-    st.push(7)
-    st.push(5)
-    st.push(8)
-    st.push(2)
-    st.push(4)
-    st.push(6)
+    with (st) {
+        push(7)
+        push(5)
+        push(8)
+        push(2)
+        push(4)
+        push(6)
 
-    println(st)
+        println(this)
+
+        pop()
+        pop()
+
+        println(this)
+        println(min())
+
+        pop()
+        pop()
+
+        println(this)
+        println(min())
+
+    }
 }
