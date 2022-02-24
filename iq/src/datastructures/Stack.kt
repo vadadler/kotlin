@@ -13,16 +13,20 @@ interface IStack<Int> {
     fun peek(): Int?
 }
 
-interface IStack2<Int> {
-    fun push(element: kotlin.Int)
+interface IStack2 {
+    fun push(element: Int)
     fun pop(): Int?
     val isEmpty: Boolean
     val length: Int
-    fun peek(): Int?
+    fun peek(): StackValue?
     fun min(): Int
 }
 
-data class StackValue(var value: Int, var min: Int)
+data class StackValue(var value: Int, var min: Int = 0) {
+    override fun toString(): String {
+        return ("$value:$min")
+    }
+}
 
 class Stack<Int>:IStack<Int> {
     var data = arrayListOf<Int>()
@@ -67,35 +71,53 @@ class Stack<Int>:IStack<Int> {
     }
 }
 
-class Stack2<Int>:IStack2<Int> {
+class Stack2:IStack2 {
     var data = arrayListOf<StackValue>()
 
-    override fun push(element: kotlin.Int) {
-        var e = StackValue(element, 0)
+    override fun toString(): String {
+        var str = StringBuilder()
+        println("---top--")
+        for (item in data.reversed()) {
+            println(item)
+        }
+        println("---------")
+        return str.toString()
+    }
+
+    override fun push(element: Int) {
+        var e = StackValue(value = element, 0)
         if (data.size == 0) {
             e.min = element
+            data.add(e)
+        } else {
+            val prevMin = peek()?.min ?: 0
+            if (element < prevMin) {
+                e.min = element
+            } else {
+                e.min = prevMin
+            }
             data.add(e)
         }
     }
 
     override fun pop(): Int? {
-        TODO("Not yet implemented")
+        if (isEmpty) return null
+        return data.removeAt(length - 1).value
     }
 
     override val isEmpty: Boolean
-        get() = TODO("Not yet implemented")
+        get() = data.size == 0
 
     override val length: Int
-        get() = TODO("Not yet implemented")
+        get() = data.size
 
-    override fun peek(): Int? {
-        TODO("Not yet implemented")
+    override fun peek(): StackValue? {
+        return data.lastOrNull()
     }
 
     override fun min(): Int {
-        TODO("Not yet implemented")
+        return data.lastOrNull()?.min ?: 0
     }
-
 
 }
 
@@ -173,19 +195,29 @@ fun main() {
 //
 //    print(st)
 
-    var ll = LinkedList<Int>()
-    with (ll) {
-        add(1)
-        add(2)
-        add(3)
-        add(4)
-        add(5)
+//    var ll = LinkedList<Int>()
+//    with (ll) {
+//        add(1)
+//        add(2)
+//        add(3)
+//        add(4)
+//        add(5)
+//
+//        println(this)
+//    }
+//
+//    println(reverseLinkedList(ll))
+//
+//    val str = "(he(llo)"
+//    println("Is () balanced in $str: ${isBalanceParentheses(str)}")
 
-        println(this)
-    }
+    var st = Stack2()
+    st.push(7)
+    st.push(5)
+    st.push(8)
+    st.push(2)
+    st.push(4)
+    st.push(6)
 
-    println(reverseLinkedList(ll))
-
-    val str = "(he(llo)"
-    println("Is () balanced in $str: ${isBalanceParentheses(str)}")
+    println(st)
 }
