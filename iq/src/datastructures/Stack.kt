@@ -52,7 +52,7 @@ class Stack<Int>:IStack<Int> {
 
     override fun toString() = buildString {
         appendLine("---top---")
-        data.asReversed().forEach{
+        data.forEach{
             appendLine("$it")
         }
         appendLine("---bottom---")
