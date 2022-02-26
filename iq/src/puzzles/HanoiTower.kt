@@ -20,7 +20,8 @@ fun main() {
     var temp = Stack<Int>()
     var dest = Stack<Int>()
     with (source) {
-        //     push(3)
+        //        push(4)
+        //        push(3)
         push(2)
         push(1)
     }
@@ -29,19 +30,20 @@ fun main() {
     println(temp)
     println(dest)
 
-    rearrange(source, dest, temp)
+    rearrange(source, temp, dest)
 
+    println("After rearrange")
     println(source)
     println(temp)
     println(dest)
 }
 
 fun rearrange(src: Stack<Int>, tmp: Stack<Int>, dest: Stack<Int>) {
-    if (src == null) return
+    if (src.peek() == null) return
 
-    if (src.length == 1) {
-        dest.push(src.pop()!!)
-    }
+    dest.push(src.pop()!!)
 
     rearrange(src, tmp, dest)
+    rearrange(src, dest, dest)
+    rearrange(tmp, dest, dest)
 }
