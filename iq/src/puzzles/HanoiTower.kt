@@ -16,34 +16,34 @@ You have the following constraints:
 Write a program to move the disks from the first tower to the last using Stacks.
  */
 fun main() {
-    var source = Stack<Int>()
-    var temp = Stack<Int>()
-    var dest = Stack<Int>()
-    with (source) {
+    var A = Stack<Int>()
+    var B = Stack<Int>()
+    var C = Stack<Int>()
+    with (A) {
         //        push(4)
-        //        push(3)
+//        push(3)
         push(2)
         push(1)
     }
 
-    println(source)
-    println(temp)
-    println(dest)
+    println(A)
+    println(B)
+    println(C)
 
-    rearrange(source, temp, dest)
+    rearrange(A, B, C)
 
     println("After rearrange")
-    println(source)
-    println(temp)
-    println(dest)
+    println(A)
+    println(B)
+    println(C)
 }
 
-fun rearrange(src: Stack<Int>, tmp: Stack<Int>, dest: Stack<Int>) {
-    if (src.peek() == null) return
+fun rearrange(A: Stack<Int>, B: Stack<Int>, C: Stack<Int>) {
+    if (A.peek() == null) return
 
-    dest.push(src.pop()!!)
+    C.push(A.pop()!!)
 
-    rearrange(src, tmp, dest)
-    rearrange(src, dest, dest)
-    rearrange(tmp, dest, dest)
+    rearrange(A, B, C)
+    rearrange(B, A, C)
+//    rearrange(B, A, C)
 }
