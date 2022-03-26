@@ -16,12 +16,13 @@ You have the following constraints:
 Write a program to move the disks from the first tower to the last using Stacks.
  */
 fun main() {
-    var A = Stack<Int>()
-    var B = Stack<Int>()
-    var C = Stack<Int>()
+    var A = Tower() // source
+    var B = Tower() // temp
+    var C = Tower() // dest
     with (A) {
-        //        push(4)
-//        push(3)
+//        push(5)
+//        push(4)
+        push(3)
         push(2)
         push(1)
     }
@@ -30,7 +31,10 @@ fun main() {
     println(B)
     println(C)
 
-    rearrange(A, B, C)
+    move(A.size() - 1, A, B)
+    A.moveFromTop(C)
+    move(B.size() - 1, B, C)
+    B.moveFromTop(C)
 
     println("After rearrange")
     println(A)
@@ -38,12 +42,32 @@ fun main() {
     println(C)
 }
 
-fun rearrange(A: Stack<Int>, B: Stack<Int>, C: Stack<Int>) {
-    if (A.peek() == null) return
+fun move(num: Int, from: Tower, to: Tower) {
+    if (num == 0) return
+    to.push(from.pop()!!)
+    move(num - 1, from, to)
+}
 
-    C.push(A.pop()!!)
+class Tower() {
+    var data = Stack<Int>()
 
-    rearrange(A, B, C)
-    rearrange(B, A, C)
-//    rearrange(B, A, C)
+    fun moveFromTop(dest: Tower) {
+        dest.push(data.pop()!!)
+    }
+
+    fun size(): Int {
+        return data.length
+    }
+
+    fun push(element: Int) {
+        data.push(element)
+    }
+
+    fun pop(): Int? {
+        return data.pop()
+    }
+
+    override fun toString(): String {
+        return data.toString()
+    }
 }
